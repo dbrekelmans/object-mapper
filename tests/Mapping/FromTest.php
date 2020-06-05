@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Tests\Mapping;
 
-use ObjectMapper\Mapping\From;
 use ObjectMapper\Mapping\Exception\InvalidType;
+use ObjectMapper\Mapping\From;
 use PHPUnit\Framework\TestCase;
 
 final class FromTest extends TestCase
 {
     /** @dataProvider fromDataProvider */
-    public function testFrom(string $fromType) : void
+    public function testFromValidType(string $fromType) : void
     {
         From::create($fromType, '');
         $this->addToAssertionCount(1);
