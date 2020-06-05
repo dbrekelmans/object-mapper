@@ -40,7 +40,7 @@ final class From
      *
      * @throws InvalidType
      */
-    public static function fromTypeAndValue(string $type, string $value) : self
+    public static function create(string $type, string $value) : self
     {
         return new self($type, $value);
     }

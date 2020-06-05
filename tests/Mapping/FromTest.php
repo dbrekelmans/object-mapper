@@ -13,7 +13,7 @@ final class FromTest extends TestCase
     /** @dataProvider fromDataProvider */
     public function testFrom(string $fromType) : void
     {
-        From::fromTypeAndValue($fromType, '');
+        From::create($fromType, '');
         $this->addToAssertionCount(1);
     }
 
@@ -30,6 +30,6 @@ final class FromTest extends TestCase
     public function testFromInvalidType() : void
     {
         $this->expectException(InvalidType::class);
-        From::fromTypeAndValue('invalid_type', '');
+        From::create('invalid_type', '');
     }
 }
