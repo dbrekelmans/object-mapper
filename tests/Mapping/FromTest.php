@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ObjectMapper\Tests\Mapping;
 
 use ObjectMapper\Mapping\From;
-use ObjectMapper\Tests\Mapping\Exception\InvalidType;
+use ObjectMapper\Mapping\Exception\InvalidType;
 use PHPUnit\Framework\TestCase;
 
 final class FromTest extends TestCase

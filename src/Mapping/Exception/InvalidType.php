@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ObjectMapper\Tests\Mapping\Exception;
+namespace ObjectMapper\Mapping\Exception;
 
 use InvalidArgumentException;
 
