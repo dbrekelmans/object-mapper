@@ -1,0 +1,29 @@
+{
+    "name": "dbrekelmans/object-mapper",
+    "description": "Maps object to object based on a user-defined mapping.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniël Brekelmans",
+            "email": "dbrekelmans@users.noreply.github.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/dbrekelmans/object-mapper/issues"
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "ObjectMapper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ObjectMapper\\Test\\": "test"
+        }
+    }
+}
