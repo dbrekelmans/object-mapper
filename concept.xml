@@ -1,8 +1,6 @@
 <mapping from="Namespace\Class" to="Namespace\Class">
     <constructor>
-        <parameters>
-            <parameter/> <!-- see method parameter -->
-        </parameters>
+        <parameter/> <!-- see method parameter -->
     </constructor>
     <properties>
         <property name="propertyName">
