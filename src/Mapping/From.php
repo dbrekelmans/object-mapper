@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Mapping;
 
-use ObjectMapper\Tests\Mapping\Exception\InvalidType;
+use ObjectMapper\Mapping\Exception\InvalidType;
 use function implode;
 use function in_array;
 use function sprintf;
