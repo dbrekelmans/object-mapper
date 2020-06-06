@@ -18,5 +18,5 @@ interface Mapping
     /** @psalm-return class-string<T> */
     public function to() : string;
 
-    public function constructor() : ?Constructor;
+    public function constructor() : Constructor;
 }

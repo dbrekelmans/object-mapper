@@ -15,7 +15,10 @@ final class Constructor
         $this->parameters = $parameters;
     }
 
-    /** @return array<Parameter> $parameters */
+    /**
+     * @psalm-return array<Parameter> $parameters
+     * @return Parameter[] $parameters
+     */
     public function parameters() : array
     {
         return $this->parameters;
