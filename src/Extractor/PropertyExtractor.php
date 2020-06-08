@@ -25,6 +25,10 @@ final class PropertyExtractor implements Extractor
             throw new NotAccessible(sprintf('Property "%s" is not public.', $target));
         }
 
+        if (!$reflectionProperty->isInitialized($from)) {
+            throw new NotAccessible(sprintf('Property "%s" is not initialized.', $target));
+        }
+
         if ($reflectionProperty->isStatic()) {
             return $from::$$target;
         }

@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 final class PropertyExtractorTest extends TestCase
 {
+    private PropertyExtractor $extractor;
+
     public function testNonExistentProperty() : void
     {
         $from = new class () {
@@ -19,7 +21,15 @@ final class PropertyExtractorTest extends TestCase
         $this->extractor->extract($from, 'property');
     }
 
-    private PropertyExtractor $extractor;
+    public function testUninitializedProperty() : void
+    {
+        $from = new class () {
+            public string $property;
+        };
+
+        $this->expectException(NotAccessible::class);
+        $this->extractor->extract($from, 'property');
+    }
 
     public function testExtractPublicProperty() : void
     {
