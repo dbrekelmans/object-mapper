@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ObjectMapper;
-
-use ObjectMapper\Mapping\Constructor;
+namespace ObjectMapper\Mapping;
 
 /**
  * @template F of object
