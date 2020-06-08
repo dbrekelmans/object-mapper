@@ -26,7 +26,7 @@ final class PropertyExtractor implements Extractor
         }
 
         if ($reflectionProperty->isStatic()) {
-            return $from::$target;
+            return $from::$$target;
         }
 
         return $from->$target;
