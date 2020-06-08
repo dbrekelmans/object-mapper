@@ -23,6 +23,14 @@ final class Constructor
     }
 
     /**
+     * @param array<Parameter> $parameters
+     */
+    public static function create(array $parameters) : self
+    {
+        return new self($parameters);
+    }
+
+    /**
      * @psalm-return list<Parameter> $parameters
      * @return array<int, Parameter>|Parameter[] $parameters
      */
