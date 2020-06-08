@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace ObjectMapper\Tests;
+namespace ObjectMapper\Tests\Mapping;
 
 use ObjectMapper\Exception\DuplicateEntry;
 use ObjectMapper\Exception\NotFound;
-use ObjectMapper\Mapping;
-use ObjectMapper\MappingRegistry;
+use ObjectMapper\Mapping\Mapping;
+use ObjectMapper\Mapping\Registry;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-final class MappingRegistryTest extends TestCase
+final class RegistryTest extends TestCase
 {
     public function testAdd() : void
     {
         $from = stdClass::class;
-        $to = MappingRegistry::class;
+        $to = Registry::class;
 
         $mapping = $this->createStub(Mapping::class);
         $mapping->method('from')->willReturn($from);
         $mapping->method('to')->willReturn($to);
 
-        $registry = new MappingRegistry();
+        $registry = new Registry();
         $registry->add($mapping);
 
         self::assertSame($mapping, $registry->get($from, $to));
@@ -31,13 +31,13 @@ final class MappingRegistryTest extends TestCase
     public function testAddDuplicate() : void
     {
         $from = stdClass::class;
-        $to = MappingRegistry::class;
+        $to = Registry::class;
 
         $mapping = $this->createStub(Mapping::class);
         $mapping->method('from')->willReturn($from);
         $mapping->method('to')->willReturn($to);
 
-        $registry = new MappingRegistry();
+        $registry = new Registry();
         $registry->add($mapping);
 
         $this->expectException(DuplicateEntry::class);
@@ -47,13 +47,13 @@ final class MappingRegistryTest extends TestCase
     public function testGet() : void
     {
         $from = stdClass::class;
-        $to = MappingRegistry::class;
+        $to = Registry::class;
 
         $mapping = $this->createStub(Mapping::class);
         $mapping->method('from')->willReturn($from);
         $mapping->method('to')->willReturn($to);
 
-        $registry = new MappingRegistry();
+        $registry = new Registry();
         $registry->add($mapping);
 
         self::assertSame($mapping, $registry->get($from, $to));
@@ -61,9 +61,9 @@ final class MappingRegistryTest extends TestCase
 
     public function testGetNotFound() : void
     {
-        $registry = new MappingRegistry();
+        $registry = new Registry();
 
         $this->expectException(NotFound::class);
-        $registry->get(stdClass::class, MappingRegistry::class);
+        $registry->get(stdClass::class, Registry::class);
     }
 }

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace ObjectMapper;
+namespace ObjectMapper\Mapping;
 
 use ObjectMapper\Exception\DuplicateEntry;
 use ObjectMapper\Exception\NotFound;
 use function md5;
 use function sprintf;
 
-final class MappingRegistry
+final class Registry
 {
     /** @psalm-var array<string, Mapping> */
     private array $registry = [];
