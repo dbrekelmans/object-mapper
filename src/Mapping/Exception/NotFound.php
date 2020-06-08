@@ -9,5 +9,4 @@ use InvalidArgumentException;
 /** @internal */
 final class NotFound extends InvalidArgumentException
 {
-
 }

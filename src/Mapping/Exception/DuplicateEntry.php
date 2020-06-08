@@ -9,5 +9,4 @@ use InvalidArgumentException;
 /** @internal */
 final class DuplicateEntry extends InvalidArgumentException
 {
-
 }
