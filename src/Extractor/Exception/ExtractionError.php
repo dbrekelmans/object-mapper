@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Extractor\Exception;
 
-use LogicException;
+use Throwable;
 
-final class ExtractionError extends LogicException
+interface ExtractionError extends Throwable
 {
-
 }

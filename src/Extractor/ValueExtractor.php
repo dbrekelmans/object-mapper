@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Extractor;
 
-use ObjectMapper\Exception\ShouldNotHappen;
 use ObjectMapper\Extractor\Exception\ExtractionError;
+use ObjectMapper\Extractor\Exception\InvalidMapping;
+use ObjectMapper\Extractor\Exception\NotAccessible;
 use ObjectMapper\Mapping\From;
 use ReflectionException;
 use ReflectionMethod;
@@ -20,19 +21,15 @@ final class ValueExtractor implements Extractor
     {
         $type = $mapping->type();
 
-        try {
-            switch ($type) {
-                case From::STATIC:
-                    return $this->extractFromStatic($mapping);
-                case From::PROPERTY:
-                    return $this->extractFromProperty($mapping, $from);
-                case From::METHOD:
-                    return $this->extractFromMethod($mapping, $from);
-                default:
-                    throw ShouldNotHappen::unreachable(sprintf('Mapping type "%s" is not handled.', $type));
-            }
-        } catch (ShouldNotHappen $exception) {
-            throw new ExtractionError('Unable to extract ', 0, $exception);
+        switch ($type) {
+            case From::STATIC:
+                return $this->extractFromStatic($mapping);
+            case From::PROPERTY:
+                return $this->extractFromProperty($mapping, $from);
+            case From::METHOD:
+                return $this->extractFromMethod($mapping, $from);
+            default:
+                throw new InvalidMapping(sprintf('Mapping type "%s" is not supported.', $type));
         }
     }
 
@@ -53,11 +50,11 @@ final class ValueExtractor implements Extractor
         try {
             $reflectionProperty = new ReflectionProperty(get_class($from), $property);
         } catch (ReflectionException $exception) {
-            throw new ExtractionError(sprintf('Property "%s" does not exist.', $property));
+            throw new NotAccessible(sprintf('Property "%s" does not exist.', $property));
         }
 
         if (!$reflectionProperty->isPublic()) {
-            throw new ExtractionError(sprintf('Property "%s" is not public.', $property));
+            throw new NotAccessible(sprintf('Property "%s" is not public.', $property));
         }
 
         if ($reflectionProperty->isStatic()) {
@@ -79,11 +76,11 @@ final class ValueExtractor implements Extractor
         try {
             $reflectionMethod = new ReflectionMethod(get_class($from), $method);
         } catch (ReflectionException $e) {
-            throw new ExtractionError(sprintf('Method "%s" does not exist.', $method));
+            throw new NotAccessible(sprintf('Method "%s" does not exist.', $method));
         }
 
         if (!$reflectionMethod->isPublic()) {
-            throw new ExtractionError(sprintf('Method "%s" is not public.', $method));
+            throw new NotAccessible(sprintf('Method "%s" is not public.', $method));
         }
 
         if ($reflectionMethod->isStatic()) {
