@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Mapping;
 
+use function array_values;
+
 final class Constructor
 {
-    /** @var array<Parameter> $parameters */
+    /**
+     * @psalm-var list<Parameter> $parameters
+     * @var array<int, Parameter> $parameters
+     */
     private array $parameters;
 
-    /** @param array<Parameter> $parameters */
+    /**
+     * @param array<Parameter> $parameters
+     */
     private function __construct(array $parameters)
     {
-        $this->parameters = $parameters;
+        $this->parameters = array_values($parameters);
     }
 
     /**
-     * @psalm-return array<Parameter> $parameters
-     * @return Parameter[] $parameters
+     * @psalm-return list<Parameter> $parameters
+     * @return array<int, Parameter>|Parameter[] $parameters
      */
     public function parameters() : array
     {
