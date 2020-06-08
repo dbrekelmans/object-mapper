@@ -21,6 +21,8 @@ final class ConstructorMapper
      */
     public function map(object $from, string $to, Constructor $constructor) : object
     {
+        // TODO: validate $to is a constructable class
+
         $parameters = [];
         foreach ($constructor->parameters() as $parameter) {
             $mapping = $parameter->from();
