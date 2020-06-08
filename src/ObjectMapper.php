@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace ObjectMapper;
 
-use ObjectMapper\Mapping\Exception\NotFound;
+use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapper\Exception\MappingError;
-use ObjectMapper\Mapper\MapperFactory;
+use ObjectMapper\Mapping\Exception\NotFound;
 use ObjectMapper\Mapping\Registry;
 use function get_class;
 
 final class ObjectMapper
 {
     private Registry $registry;
-    private MapperFactory $factory;
 
-    public function __construct(Registry $registry, MapperFactory $factory)
+    public function __construct(Registry $registry)
     {
         $this->registry = $registry;
-        $this->factory = $factory;
     }
 
     /**
@@ -35,7 +33,7 @@ final class ObjectMapper
     {
         $mapping = $this->registry->get(get_class($from), $to);
 
-        $constructed = $this->factory->constructor()->map($from, $to, $mapping->constructor());
+        $constructed = (new ConstructorMapper())->map($from, $to, $mapping->constructor());
 
         $constructed;
 

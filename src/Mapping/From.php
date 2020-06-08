@@ -4,48 +4,31 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Mapping;
 
+use ObjectMapper\Extractor\Extractor;
+
 final class From
 {
-    public const STATIC = 'static';
-    public const PROPERTY = 'property';
-    public const METHOD = 'method';
+    private Extractor $extractor;
+    private string $target;
 
-    /** @psalm-var (self::STATIC | self::PROPERTY | self::METHOD) $type */
-    private string $type;
-    private string $value;
-
-    /**
-     * @psalm-param (self::STATIC | self::PROPERTY | self::METHOD) $type
-     */
-    private function __construct(string $type, string $value)
+    private function __construct(Extractor $extractor, string $target)
     {
-        $this->type = $type;
-        $this->value = $value;
+        $this->extractor = $extractor;
+        $this->target = $target;
     }
 
-    public static function static(string $value) : self
+    public static function create(Extractor $extractor, string $value) : self
     {
-        return new self(self::STATIC, $value);
+        return new self($extractor, $value);
     }
 
-    public static function property(string $value) : self
+    public function extractor() : Extractor
     {
-        return new self(self::PROPERTY, $value);
+        return $this->extractor;
     }
 
-    public static function method(string $value) : self
+    public function target() : string
     {
-        return new self(self::METHOD, $value);
-    }
-
-    /** @psalm-return (self::STATIC | self::PROPERTY | self::METHOD) */
-    public function type() : string
-    {
-        return $this->type;
-    }
-
-    public function value() : string
-    {
-        return $this->value;
+        return $this->target;
     }
 }

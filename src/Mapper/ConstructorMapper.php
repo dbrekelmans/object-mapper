@@ -5,19 +5,11 @@ declare(strict_types=1);
 namespace ObjectMapper\Mapper;
 
 use ObjectMapper\Extractor\Exception\ExtractionError;
-use ObjectMapper\Extractor\Extractor;
 use ObjectMapper\Mapper\Exception\MappingError;
 use ObjectMapper\Mapping\Constructor;
 
 final class ConstructorMapper
 {
-    private Extractor $extractor;
-
-    public function __construct(Extractor $extractor)
-    {
-        $this->extractor = $extractor;
-    }
-
     /**
      * @template T
      *
@@ -34,7 +26,7 @@ final class ConstructorMapper
             $mapping = $parameter->from();
 
             try {
-                $parameters[] = $this->extractor->extract($from, $mapping);
+                $parameters[] = $mapping->extractor()->extract($from, $mapping->target());
             } catch (ExtractionError $exception) {
                 throw new MappingError(
                     'Unable to determine parameter value from provided object.',
