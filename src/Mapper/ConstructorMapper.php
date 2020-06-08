@@ -36,6 +36,9 @@ final class ConstructorMapper
             }
         }
 
+        // TODO: validate parameter count
+        // TODO: validate parameter types
+
         return new $to(...$parameters);
     }
 }
