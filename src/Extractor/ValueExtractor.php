@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Extractor;
 
-use ObjectMapper\Exception\NotFound;
 use ObjectMapper\Exception\ShouldNotHappen;
 use ObjectMapper\Extractor\Exception\ExtractionError;
 use ObjectMapper\Mapping\From;
-use function method_exists;
-use function property_exists;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionProperty;
+use function get_class;
 use function sprintf;
 
 final class ValueExtractor implements Extractor
@@ -30,7 +31,7 @@ final class ValueExtractor implements Extractor
                 default:
                     throw ShouldNotHappen::unreachable(sprintf('Mapping type "%s" is not handled.', $type));
             }
-        } catch (NotFound|ShouldNotHappen $exception) {
+        } catch (ShouldNotHappen $exception) {
             throw new ExtractionError('Unable to extract ', 0, $exception);
         }
     }
@@ -43,15 +44,24 @@ final class ValueExtractor implements Extractor
     /**
      * @return mixed
      *
-     * @throws NotFound
+     * @throws ExtractionError
      */
     private function extractFromProperty(From $mapping, object $from)
     {
         $property = $mapping->value();
 
-        if (!property_exists($from, $property)) {
-            // TODO: Check if property is public... use Reflection
-            throw new NotFound(sprintf('Property "%s" does not exist on provided object.', $property));
+        try {
+            $reflectionProperty = new ReflectionProperty(get_class($from), $property);
+        } catch (ReflectionException $exception) {
+            throw new ExtractionError(sprintf('Property "%s" does not exist.', $property));
+        }
+
+        if (!$reflectionProperty->isPublic()) {
+            throw new ExtractionError(sprintf('Property "%s" is not public.', $property));
+        }
+
+        if ($reflectionProperty->isStatic()) {
+            return $from::$property;
         }
 
         return $from->$property;
@@ -60,15 +70,24 @@ final class ValueExtractor implements Extractor
     /**
      * @return mixed
      *
-     * @throws NotFound
+     * @throws ExtractionError
      */
     private function extractFromMethod(From $mapping, object $from)
     {
         $method = $mapping->value();
 
-        if (!method_exists($from, $method)) {
-            // TODO: Check if method is public... use Reflection
-            throw new NotFound(sprintf('Method "%s" does not exist on provided object.', $method));
+        try {
+            $reflectionMethod = new ReflectionMethod(get_class($from), $method);
+        } catch (ReflectionException $e) {
+            throw new ExtractionError(sprintf('Method "%s" does not exist.', $method));
+        }
+
+        if (!$reflectionMethod->isPublic()) {
+            throw new ExtractionError(sprintf('Method "%s" is not public.', $method));
+        }
+
+        if ($reflectionMethod->isStatic()) {
+            return $from::$method();
         }
 
         return $from->$method();
