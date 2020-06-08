@@ -15,10 +15,10 @@
                 <from type="static">static value</from>
             </parameter>
             <parameter><!-- from property -->
-                <from type="property">propertyName</from>
+                <from type="property" extractor="default">propertyName</from>
             </parameter>
             <parameter><!-- from method -->
-                <from type="method">methodName</from>
+                <from type="method" extractor="reflection">methodName</from>
             </parameter>
             <parameter><!-- constraint -->
                 <from type="method">methodName</from>
