@@ -30,11 +30,6 @@ final class PropertyExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($from, 'property'));
     }
 
-    protected function setUp() : void
-    {
-        $this->extractor = new PropertyExtractor();
-    }
-
     public function testExtractProtectedProperty() : void
     {
         $from = new class () {
@@ -73,5 +68,10 @@ final class PropertyExtractorTest extends TestCase
 
         $this->expectException(NotAccessible::class);
         $this->extractor->extract($from, 'property');
+    }
+
+    protected function setUp() : void
+    {
+        $this->extractor = new PropertyExtractor();
     }
 }
