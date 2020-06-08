@@ -12,13 +12,13 @@
     <methods>
         <method name="methodName">
             <parameter> <!-- from static value -->
-                <from type="static">static value</from>
+                <from extractor="static">static value</from>
             </parameter>
             <parameter><!-- from property -->
-                <from type="property" extractor="default">propertyName</from>
+                <from extractor="property">propertyName</from>
             </parameter>
             <parameter><!-- from method -->
-                <from type="method" extractor="reflection">methodName</from>
+                <from extractor="method">methodName</from>
             </parameter>
             <parameter><!-- constraint -->
                 <from type="method">methodName</from>
@@ -37,7 +37,7 @@
                 </transformers>
             </parameter>
             <parameter> <!-- from static value with type transformer -->
-                <from type="value">1</from>
+                <from extractor="static">1</from>
                 <transformers>
                     <transformer class="ObjectMapper\Transformer\TypeTransformer">
                         <option name="type">integer</option>
