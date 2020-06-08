@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Tests\Mapping;
 
-use ObjectMapper\Exception\DuplicateEntry;
-use ObjectMapper\Exception\NotFound;
+use ObjectMapper\Mapping\Exception\DuplicateEntry;
+use ObjectMapper\Mapping\Exception\NotFound;
 use ObjectMapper\Mapping\Mapping;
 use ObjectMapper\Mapping\Registry;
 use PHPUnit\Framework\TestCase;

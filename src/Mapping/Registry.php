@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Mapping;
 
-use ObjectMapper\Exception\DuplicateEntry;
-use ObjectMapper\Exception\NotFound;
+use ObjectMapper\Mapping\Exception\DuplicateEntry;
+use ObjectMapper\Mapping\Exception\NotFound;
 use function md5;
 use function sprintf;
 

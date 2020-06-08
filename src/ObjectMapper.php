@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ObjectMapper;
 
-use ObjectMapper\Exception\NotFound;
+use ObjectMapper\Mapping\Exception\NotFound;
 use ObjectMapper\Mapper\Exception\MappingError;
 use ObjectMapper\Mapper\MapperFactory;
 use ObjectMapper\Mapping\Registry;
