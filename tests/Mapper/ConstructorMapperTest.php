@@ -8,7 +8,7 @@ use ObjectMapper\Extractor\Extractor;
 use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapping\Constructor;
 use ObjectMapper\Mapping\From;
-use ObjectMapper\Mapping\Parameter;
+use ObjectMapper\Mapping\Argument;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function array_values;
@@ -30,7 +30,7 @@ final class ConstructorMapperTest extends TestCase
 
         $parameters = [];
         foreach ($expectedProperties as $expectedValue) {
-            $parameters[] = Parameter::create(From::create($extractor, $expectedValue));
+            $parameters[] = Argument::create(From::create($extractor, $expectedValue));
         }
 
         $mappedObject = (new ConstructorMapper())->map(new stdClass(), $to, Constructor::create($parameters));

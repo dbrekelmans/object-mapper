@@ -9,33 +9,33 @@ use function array_values;
 final class Constructor
 {
     /**
-     * @psalm-var list<Parameter> $parameters
-     * @var array<int, Parameter> $parameters
+     * @psalm-var list<Argument> $arguments
+     * @var array<int, Argument> $arguments
      */
-    private array $parameters;
+    private array $arguments;
 
     /**
-     * @param array<Parameter> $parameters
+     * @param array<Argument> $parameters
      */
     private function __construct(array $parameters)
     {
-        $this->parameters = array_values($parameters);
+        $this->arguments = array_values($parameters);
     }
 
     /**
-     * @param array<Parameter> $parameters
+     * @param array<Argument> $arguments
      */
-    public static function create(array $parameters) : self
+    public static function create(array $arguments) : self
     {
-        return new self($parameters);
+        return new self($arguments);
     }
 
     /**
-     * @psalm-return list<Parameter> $parameters
-     * @return array<int, Parameter>|Parameter[] $parameters
+     * @psalm-return list<Argument>
+     * @return array<int, Argument>|Argument[]
      */
-    public function parameters() : array
+    public function arguments() : array
     {
-        return $this->parameters;
+        return $this->arguments;
     }
 }

@@ -36,15 +36,15 @@ final class ConstructorMapper
         }
 
         $arguments = [];
-        foreach ($constructor->parameters() as $parameter) {
-            $mapping = $parameter->from();
+        foreach ($constructor->arguments() as $argument) {
+            $mapping = $argument->from();
 
             try {
                 // TODO: refactor to Arguments class
                 $arguments[] = $mapping->extractor()->extract($from, $mapping->target());
             } catch (ExtractionError $exception) {
                 throw new MappingError(
-                    'Unable to determine parameter value from provided object.',
+                    'Unable to determine argument value from provided object.',
                     0,
                     $exception
                 );

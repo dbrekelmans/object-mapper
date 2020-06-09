@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Mapping;
 
-final class Parameter
+final class Argument
 {
     private From $from;
 
