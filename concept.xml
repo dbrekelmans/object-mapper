@@ -5,7 +5,7 @@
     <properties>
         <property name="propertyName">
             <source/> <!-- see method argument source -->
-            <constraints/> <!-- see method argument constrains -->
+            <constraints/> <!-- see method argument constraints -->
             <transformers/> <!-- see method argument transformers -->
         </property>
     </properties>
