@@ -12,6 +12,7 @@ final class MethodExtractorTest extends TestCase
 {
     private MethodExtractor $extractor;
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testNonExistentMethod() : void
     {
         $from = new class () {
@@ -21,6 +22,7 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($from, 'method');
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testVoidMethod() : void
     {
         $from = new class () {
@@ -32,6 +34,7 @@ final class MethodExtractorTest extends TestCase
         self::assertNull($this->extractor->extract($from, 'method'));
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPublicMethod() : void
     {
         $from = new class () {
@@ -44,6 +47,7 @@ final class MethodExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($from, 'method'));
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPublicStaticMethod() : void
     {
         $from = new class () {
@@ -56,6 +60,7 @@ final class MethodExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($from, 'method'));
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractProtectedMethod() : void
     {
         $from = new class () {
@@ -69,6 +74,7 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($from, 'method');
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractProtectedStaticMethod() : void
     {
         $from = new class () {
@@ -82,6 +88,7 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($from, 'method');
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPrivateMethod() : void
     {
         $from = new class () {
@@ -95,6 +102,7 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($from, 'method');
     }
 
+    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPrivateStaticMethod() : void
     {
         $from = new class () {

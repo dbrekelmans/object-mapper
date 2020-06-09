@@ -18,6 +18,8 @@ final class ConstructorMapperTest extends TestCase
     /**
      * @dataProvider mapDataProvider
      *
+     * @covers \ObjectMapper\Mapper\ConstructorMapper::map
+     *
      * @psalm-param class-string $to
      * @param array<string, mixed> $expectedProperties
      */
