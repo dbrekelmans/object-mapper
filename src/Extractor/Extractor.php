@@ -13,5 +13,5 @@ interface Extractor
      *
      * @throws ExtractionError
      */
-    public function extract(object $from, string $target);
+    public function extract(object $source, string $data);
 }

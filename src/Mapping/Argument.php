@@ -6,20 +6,20 @@ namespace ObjectMapper\Mapping;
 
 final class Argument
 {
-    private From $from;
+    private Source $source;
 
-    private function __construct(From $from)
+    private function __construct(Source $source)
     {
-        $this->from = $from;
+        $this->source = $source;
     }
 
-    public static function create(From $from) : self
+    public static function create(Source $source) : self
     {
-        return new self($from);
+        return new self($source);
     }
 
-    public function from() : From
+    public function source() : Source
     {
-        return $this->from;
+        return $this->source;
     }
 }

@@ -11,10 +11,10 @@ namespace ObjectMapper\Mapping;
 interface Mapping
 {
     /** @psalm-return class-string<F> */
-    public function from() : string;
+    public function source() : string;
 
     /** @psalm-return class-string<T> */
-    public function to() : string;
+    public function target() : string;
 
     public function constructor() : Constructor;
 }

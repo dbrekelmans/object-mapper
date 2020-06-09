@@ -21,27 +21,27 @@ final class ConstructorMapper
     /**
      * @template T
      *
-     * @psalm-param class-string<T> $to
+     * @psalm-param class-string<T> $target
      *
      * @psalm-return T
      *
      * @throws MappingError
      */
-    public function map(object $from, string $to, Constructor $constructor) : object
+    public function map(object $source, string $target, Constructor $constructor) : object
     {
         try {
-            $reflectionClass = new ReflectionClass($to);
+            $reflectionClass = new ReflectionClass($target);
         } catch (ReflectionException $e) {
-            throw new MappingError(sprintf('Class "%s" does not exist.', $to));
+            throw new MappingError(sprintf('Class "%s" does not exist.', $target));
         }
 
         $arguments = [];
         foreach ($constructor->arguments() as $argument) {
-            $mapping = $argument->from();
+            $mapping = $argument->source();
 
             try {
                 // TODO: refactor to Arguments class
-                $arguments[] = $mapping->extractor()->extract($from, $mapping->target());
+                $arguments[] = $mapping->extractor()->extract($source, $mapping->data());
             } catch (ExtractionError $exception) {
                 throw new MappingError(
                     'Unable to determine argument value from provided object.',
@@ -56,7 +56,7 @@ final class ConstructorMapper
         $this->validateNumberOfArguments(count($arguments), $constructorReflectionMethod);
         $this->validateArgumentTypes($arguments, $constructorReflectionMethod);
 
-        return new $to(...$arguments);
+        return new $target(...$arguments);
     }
 
     /** @throws MappingError */

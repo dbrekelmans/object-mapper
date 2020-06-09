@@ -13,22 +13,22 @@ use function sprintf;
 final class MethodExtractor implements Extractor
 {
     /** @inheritDoc */
-    public function extract(object $from, string $target)
+    public function extract(object $source, string $data)
     {
         try {
-            $reflectionMethod = new ReflectionMethod(get_class($from), $target);
+            $reflectionMethod = new ReflectionMethod(get_class($source), $data);
         } catch (ReflectionException $e) {
-            throw new NotAccessible(sprintf('Method "%s" does not exist.', $target));
+            throw new NotAccessible(sprintf('Method "%s" does not exist.', $data));
         }
 
         if (!$reflectionMethod->isPublic()) {
-            throw new NotAccessible(sprintf('Method "%s" is not public.', $target));
+            throw new NotAccessible(sprintf('Method "%s" is not public.', $data));
         }
 
         if ($reflectionMethod->isStatic()) {
-            return $from::$target();
+            return $source::$data();
         }
 
-        return $from->$target();
+        return $source->$data();
     }
 }

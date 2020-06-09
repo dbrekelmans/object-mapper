@@ -7,7 +7,7 @@ namespace ObjectMapper\Tests\Mapper;
 use ObjectMapper\Extractor\Extractor;
 use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapping\Constructor;
-use ObjectMapper\Mapping\From;
+use ObjectMapper\Mapping\Source;
 use ObjectMapper\Mapping\Argument;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -20,22 +20,22 @@ final class ConstructorMapperTest extends TestCase
      *
      * @covers \ObjectMapper\Mapper\ConstructorMapper::map
      *
-     * @psalm-param class-string $to
+     * @psalm-param class-string $target
      * @param array<string, mixed> $expectedProperties
      */
-    public function testMap(string $to, array $expectedProperties) : void
+    public function testMap(string $target, array $expectedProperties) : void
     {
         $extractor = $this->createStub(Extractor::class);
         $extractor->method('extract')->willReturnArgument(1);
 
         $parameters = [];
         foreach ($expectedProperties as $expectedValue) {
-            $parameters[] = Argument::create(From::create($extractor, $expectedValue));
+            $parameters[] = Argument::create(Source::create($extractor, $expectedValue));
         }
 
-        $mappedObject = (new ConstructorMapper())->map(new stdClass(), $to, Constructor::create($parameters));
+        $mappedObject = (new ConstructorMapper())->map(new stdClass(), $target, Constructor::create($parameters));
 
-        self::assertEquals(new $to(...array_values($expectedProperties)), $mappedObject);
+        self::assertEquals(new $target(...array_values($expectedProperties)), $mappedObject);
 
         foreach ($expectedProperties as $propertyName => $propertyValue) {
             self::assertSame($propertyValue, $mappedObject->$propertyName);

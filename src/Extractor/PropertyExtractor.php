@@ -13,26 +13,26 @@ use function sprintf;
 final class PropertyExtractor implements Extractor
 {
     /** @inheritDoc */
-    public function extract(object $from, string $target)
+    public function extract(object $source, string $data)
     {
         try {
-            $reflectionProperty = new ReflectionProperty(get_class($from), $target);
+            $reflectionProperty = new ReflectionProperty(get_class($source), $data);
         } catch (ReflectionException $exception) {
-            throw new NotAccessible(sprintf('Property "%s" does not exist.', $target));
+            throw new NotAccessible(sprintf('Property "%s" does not exist.', $data));
         }
 
         if (!$reflectionProperty->isPublic()) {
-            throw new NotAccessible(sprintf('Property "%s" is not public.', $target));
+            throw new NotAccessible(sprintf('Property "%s" is not public.', $data));
         }
 
-        if (!$reflectionProperty->isInitialized($from)) {
-            throw new NotAccessible(sprintf('Property "%s" is not initialized.', $target));
+        if (!$reflectionProperty->isInitialized($source)) {
+            throw new NotAccessible(sprintf('Property "%s" is not initialized.', $data));
         }
 
         if ($reflectionProperty->isStatic()) {
-            return $from::$$target;
+            return $source::$$data;
         }
 
-        return $from->$target;
+        return $source->$data;
     }
 }

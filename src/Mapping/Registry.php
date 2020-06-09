@@ -17,46 +17,50 @@ final class Registry
     /** @throws DuplicateEntry */
     public function add(Mapping $mapping) : void
     {
-        $from = $mapping->from();
-        $to = $mapping->to();
+        $source = $mapping->source();
+        $target = $mapping->target();
 
-        if ($this->has($from, $to)) {
-            throw new DuplicateEntry(sprintf('Mapping from "%s" to "%s" is already registered.', $from, $to));
+        if ($this->has($source, $target)) {
+            throw new DuplicateEntry(sprintf(
+                'Mapping source "%s" to target "%s" is already registered.',
+                $source,
+                $target
+            ));
         }
 
-        $this->registry[$this->generateIndex($from, $to)] = $mapping;
+        $this->registry[$this->generateIndex($source, $target)] = $mapping;
     }
 
     /**
-     * @psalm-var class-string $from
-     * @psalm-var class-string $to
+     * @psalm-var class-string $source
+     * @psalm-var class-string $target
      *
      * @throws NotFound
      */
-    public function get(string $from, string $to) : Mapping
+    public function get(string $source, string $target) : Mapping
     {
-        if (!$this->has($from, $to)) {
-            throw new NotFound(sprintf('No mapping registered from "%s" to "%s"', $from, $to));
+        if (!$this->has($source, $target)) {
+            throw new NotFound(sprintf('No mapping registered from source "%s" to target "%s"', $source, $target));
         }
 
-        return $this->registry[$this->generateIndex($from, $to)];
+        return $this->registry[$this->generateIndex($source, $target)];
     }
 
     /**
-     * @psalm-var class-string $from
-     * @psalm-var class-string $to
+     * @psalm-var class-string $source
+     * @psalm-var class-string $target
      */
-    private function has(string $from, string $to) : bool
+    private function has(string $source, string $target) : bool
     {
-        return isset($this->registry[$this->generateIndex($from, $to)]);
+        return isset($this->registry[$this->generateIndex($source, $target)]);
     }
 
     /**
-     * @psalm-var class-string $from
-     * @psalm-var class-string $to
+     * @psalm-var class-string $source
+     * @psalm-var class-string $target
      */
-    private function generateIndex(string $from, string $to) : string
+    private function generateIndex(string $source, string $target) : string
     {
-        return md5($from . $to);
+        return md5($source . $target);
     }
 }

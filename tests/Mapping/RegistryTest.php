@@ -16,28 +16,28 @@ final class RegistryTest extends TestCase
     /** @covers \ObjectMapper\Mapping\Registry::add */
     public function testAdd() : void
     {
-        $from = stdClass::class;
-        $to = Registry::class;
+        $source = stdClass::class;
+        $target = Registry::class;
 
         $mapping = $this->createStub(Mapping::class);
-        $mapping->method('from')->willReturn($from);
-        $mapping->method('to')->willReturn($to);
+        $mapping->method('source')->willReturn($source);
+        $mapping->method('target')->willReturn($target);
 
         $registry = new Registry();
         $registry->add($mapping);
 
-        self::assertSame($mapping, $registry->get($from, $to));
+        self::assertSame($mapping, $registry->get($source, $target));
     }
 
     /** @covers \ObjectMapper\Mapping\Registry::add */
     public function testAddDuplicate() : void
     {
-        $from = stdClass::class;
-        $to = Registry::class;
+        $source = stdClass::class;
+        $target = Registry::class;
 
         $mapping = $this->createStub(Mapping::class);
-        $mapping->method('from')->willReturn($from);
-        $mapping->method('to')->willReturn($to);
+        $mapping->method('source')->willReturn($source);
+        $mapping->method('target')->willReturn($target);
 
         $registry = new Registry();
         $registry->add($mapping);
@@ -49,17 +49,17 @@ final class RegistryTest extends TestCase
     /** @covers \ObjectMapper\Mapping\Registry::get */
     public function testGet() : void
     {
-        $from = stdClass::class;
-        $to = Registry::class;
+        $source = stdClass::class;
+        $target = Registry::class;
 
         $mapping = $this->createStub(Mapping::class);
-        $mapping->method('from')->willReturn($from);
-        $mapping->method('to')->willReturn($to);
+        $mapping->method('source')->willReturn($source);
+        $mapping->method('target')->willReturn($target);
 
         $registry = new Registry();
         $registry->add($mapping);
 
-        self::assertSame($mapping, $registry->get($from, $to));
+        self::assertSame($mapping, $registry->get($source, $target));
     }
 
     /** @covers \ObjectMapper\Mapping\Registry::get */

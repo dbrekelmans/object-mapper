@@ -15,55 +15,55 @@ final class MethodExtractorTest extends TestCase
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testNonExistentMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'method');
+        $this->extractor->extract($source, 'method');
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testVoidMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             public function method() : void
             {
             }
         };
 
-        self::assertNull($this->extractor->extract($from, 'method'));
+        self::assertNull($this->extractor->extract($source, 'method'));
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPublicMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             public function method() : string
             {
                 return 'value';
             }
         };
 
-        self::assertSame('value', $this->extractor->extract($from, 'method'));
+        self::assertSame('value', $this->extractor->extract($source, 'method'));
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPublicStaticMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             public static function method() : string
             {
                 return 'value';
             }
         };
 
-        self::assertSame('value', $this->extractor->extract($from, 'method'));
+        self::assertSame('value', $this->extractor->extract($source, 'method'));
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractProtectedMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             protected function method() : string
             {
                 return 'value';
@@ -71,13 +71,13 @@ final class MethodExtractorTest extends TestCase
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'method');
+        $this->extractor->extract($source, 'method');
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractProtectedStaticMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             protected static function method() : string
             {
                 return 'value';
@@ -85,13 +85,13 @@ final class MethodExtractorTest extends TestCase
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'method');
+        $this->extractor->extract($source, 'method');
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPrivateMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             private function method() : string
             {
                 return 'value';
@@ -99,13 +99,13 @@ final class MethodExtractorTest extends TestCase
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'method');
+        $this->extractor->extract($source, 'method');
     }
 
     /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPrivateStaticMethod() : void
     {
-        $from = new class () {
+        $source = new class () {
             private static function method() : string
             {
                 return 'value';
@@ -113,7 +113,7 @@ final class MethodExtractorTest extends TestCase
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'method');
+        $this->extractor->extract($source, 'method');
     }
 
     protected function setUp() : void

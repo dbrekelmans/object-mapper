@@ -22,18 +22,18 @@ final class ObjectMapper
     /**
      * @template T
      *
-     * @psalm-var class-string<T> $to
+     * @psalm-var class-string<T> $target
      *
      * @psalm-return T
      *
      * @throws NotFound
      * @throws MappingError
      */
-    public function map(object $from, string $to) : object
+    public function map(object $source, string $target) : object
     {
-        $mapping = $this->registry->get(get_class($from), $to);
+        $mapping = $this->registry->get(get_class($source), $target);
 
-        $constructed = (new ConstructorMapper())->map($from, $to, $mapping->constructor());
+        $constructed = (new ConstructorMapper())->map($source, $target, $mapping->constructor());
 
         $constructed;
 

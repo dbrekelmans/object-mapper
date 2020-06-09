@@ -6,15 +6,15 @@ namespace ObjectMapper\Mapping;
 
 use ObjectMapper\Extractor\Extractor;
 
-final class From
+final class Source
 {
     private Extractor $extractor;
-    private string $target;
+    private string $data;
 
-    private function __construct(Extractor $extractor, string $target)
+    private function __construct(Extractor $extractor, string $data)
     {
         $this->extractor = $extractor;
-        $this->target = $target;
+        $this->data = $data;
     }
 
     public static function create(Extractor $extractor, string $value) : self
@@ -27,8 +27,8 @@ final class From
         return $this->extractor;
     }
 
-    public function target() : string
+    public function data() : string
     {
-        return $this->target;
+        return $this->data;
     }
 }

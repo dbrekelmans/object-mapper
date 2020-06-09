@@ -15,86 +15,86 @@ final class PropertyExtractorTest extends TestCase
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testNonExistentProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'property');
+        $this->extractor->extract($source, 'property');
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testUninitializedProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             public string $property;
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'property');
+        $this->extractor->extract($source, 'property');
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPublicProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             public string $property = 'value';
         };
 
-        self::assertSame('value', $this->extractor->extract($from, 'property'));
+        self::assertSame('value', $this->extractor->extract($source, 'property'));
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPublicStaticProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             public static string $property = 'value';
         };
 
-        self::assertSame('value', $this->extractor->extract($from, 'property'));
+        self::assertSame('value', $this->extractor->extract($source, 'property'));
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractProtectedProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             protected string $property = 'value';
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'property');
+        $this->extractor->extract($source, 'property');
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractProtectedStaticProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             protected static string $property = 'value';
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'property');
+        $this->extractor->extract($source, 'property');
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPrivateProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             private string $property = 'value';
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'property');
+        $this->extractor->extract($source, 'property');
     }
 
     /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPrivateStaticProperty() : void
     {
-        $from = new class () {
+        $source = new class () {
             private static string $property = 'value';
         };
 
         $this->expectException(NotAccessible::class);
-        $this->extractor->extract($from, 'property');
+        $this->extractor->extract($source, 'property');
     }
 
     protected function setUp() : void

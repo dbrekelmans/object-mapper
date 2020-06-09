@@ -1,27 +1,27 @@
-<mapping from="Namespace\Class" to="Namespace\Class">
+<mapping source="Namespace\Class" target="Namespace\Class">
     <constructor>
         <argument/> <!-- see method argument -->
     </constructor>
     <properties>
         <property name="propertyName">
-            <from/> <!-- see method argument from -->
+            <source/> <!-- see method argument source -->
             <constraints/> <!-- see method argument constrains -->
             <transformers/> <!-- see method argument transformers -->
         </property>
     </properties>
     <methods>
         <method name="methodName">
-            <argument> <!-- from static value -->
-                <from extractor="static">static value</from>
+            <argument> <!-- source static value -->
+                <source extractor="static">static value</source>
             </argument>
-            <argument><!-- from property -->
-                <from extractor="property">propertyName</from>
+            <argument><!-- source property -->
+                <source extractor="property">propertyName</source>
             </argument>
-            <argument><!-- from method -->
-                <from extractor="method">methodName</from>
+            <argument><!-- source method -->
+                <source extractor="method">methodName</source>
             </argument>
             <argument><!-- constraint -->
-                <from type="method">methodName</from>
+                <source type="method">methodName</source>
                 <constraints>
                     <constraint class="Namespace\Class">
                         <option name="optionName">option value</option>
@@ -29,15 +29,15 @@
                 </constraints>
             </argument>
             <argument><!-- transformer -->
-                <from type="method">methodName</from>
+                <source type="method">methodName</source>
                 <transformers>
                     <transformer class="Namespace\Class">
                         <option name="optionName">option value</option>
                     </transformer>
                 </transformers>
             </argument>
-            <argument> <!-- from static value with type transformer -->
-                <from extractor="static">1</from>
+            <argument> <!-- source static value with type transformer -->
+                <source extractor="static">1</source>
                 <transformers>
                     <transformer class="ObjectMapper\Transformer\TypeTransformer">
                         <option name="type">integer</option>
