@@ -6,9 +6,10 @@ namespace ObjectMapper\Tests\Mapper;
 
 use ObjectMapper\Extractor\Extractor;
 use ObjectMapper\Mapper\ConstructorMapper;
+use ObjectMapper\Mapping\Argument;
 use ObjectMapper\Mapping\Constructor;
 use ObjectMapper\Mapping\Source;
-use ObjectMapper\Mapping\Argument;
+use ObjectMapper\Validator\Reflection\MethodValidator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function array_values;
@@ -18,7 +19,7 @@ final class ConstructorMapperTest extends TestCase
     /**
      * @dataProvider mapDataProvider
      *
-     * @covers \ObjectMapper\Mapper\ConstructorMapper::map
+     * @covers       \ObjectMapper\Mapper\ConstructorMapper::map
      *
      * @psalm-param class-string $target
      * @param array<string, mixed> $expectedProperties
@@ -33,7 +34,12 @@ final class ConstructorMapperTest extends TestCase
             $parameters[] = Argument::create(Source::create($extractor, $expectedValue));
         }
 
-        $mappedObject = (new ConstructorMapper())->map(new stdClass(), $target, Constructor::create($parameters));
+        $methodValidator = $this->createStub(MethodValidator::class);
+        $methodValidator->method('isValid')->willReturn(true);
+
+        $mapper = new ConstructorMapper($methodValidator);
+
+        $mappedObject = $mapper->map(new stdClass(), $target, Constructor::create($parameters));
 
         self::assertEquals(new $target(...array_values($expectedProperties)), $mappedObject);
 
