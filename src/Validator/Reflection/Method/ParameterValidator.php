@@ -10,7 +10,7 @@ use ObjectMapper\Validator\Reflection\TypeValidator;
 use ObjectMapper\Validator\Validator;
 use ReflectionParameter;
 
-class ParameterValidator implements Validator
+final class ParameterValidator implements Validator
 {
     private TypeValidator $typeValidator;
 

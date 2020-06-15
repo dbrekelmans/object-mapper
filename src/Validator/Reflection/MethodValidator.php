@@ -14,7 +14,7 @@ use function array_values;
 use function count;
 use function sprintf;
 
-class MethodValidator implements Validator
+final class MethodValidator implements Validator
 {
     private ParameterValidator $parameterValidator;
 

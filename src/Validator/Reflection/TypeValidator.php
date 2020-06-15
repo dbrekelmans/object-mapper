@@ -13,7 +13,7 @@ use ReflectionType;
 use SebastianBergmann\Type\Type;
 use function sprintf;
 
-class TypeValidator implements Validator
+final class TypeValidator implements Validator
 {
     /** @param mixed $value */
     public static function data($value, ReflectionType $reflectionType) : TypeValidatorData
