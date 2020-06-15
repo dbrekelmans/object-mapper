@@ -74,7 +74,7 @@ class MethodValidator implements Validator
     }
 }
 
-class MethodValidatorData
+final class MethodValidatorData
 {
     /**
      * @psalm-var list<mixed>
