@@ -8,25 +8,26 @@ use DateTime;
 use ObjectMapper\Validator\Reflection\TypeValidator;
 use PHPUnit\Framework\TestCase;
 use ReflectionNamedType;
+use ReflectionType;
 use stdClass;
 
 final class TypeValidatorTest extends TestCase
 {
+    private TypeValidator $validator;
+
     /**
      * @dataProvider validateValidTypeDataProvider
      *
-     * @covers       \ObjectMapper\Validator\Reflection\TypeValidator::isValid
+     * @covers       \ObjectMapper\Validator\Reflection\TypeValidator::validate
      *
      * @param mixed $value
      */
-    public function testValidateValidNamedType($value, ReflectionNamedType $type)
+    public function testValidateValidType($value, ReflectionType $type) : void
     {
-        $validator = new TypeValidator();
+        $context = $this->validator->validate(TypeValidator::data($value, $type));
 
-        self::assertTrue($validator->isValid($value, $type));
+        self::assertCount(0, $context->violations());
     }
-
-    // TODO: public function testValidateInvalidNamedType($value, ReflectionNamedType $type)
 
     /** @return array<string, array<mixed>> */
     public function validateValidTypeDataProvider() : array
@@ -55,6 +56,41 @@ final class TypeValidatorTest extends TestCase
             'null_interface' => [null, $this->createReflectionNamedType('DateTimeInterface', true)],
         ];
     }
+
+    /**
+     * @dataProvider validateInvalidTypeDataProvider
+     *
+     * @covers       \ObjectMapper\Validator\Reflection\TypeValidator::validate
+     *
+     * @param mixed $value
+     */
+    public function testValidateInvalidType($value, ReflectionType $type) : void
+    {
+        $context = $this->validator->validate(TypeValidator::data($value, $type));
+        $violations = $context->violations();
+
+        self::assertCount(1, $violations);
+    }
+
+    /** @return array<string, array<mixed>> */
+    public function validateInvalidTypeDataProvider() : array
+    {
+        return [
+            'native_type' => [0, $this->createReflectionNamedType('bool', false)],
+            'nullable_native_type' => [0, $this->createReflectionNamedType('bool', true)],
+            'null_type' => [null, $this->createReflectionNamedType('bool', false)],
+            'class' => [new stdClass(), $this->createReflectionNamedType('DateTime', false)],
+            'nullable_class' => [new stdClass(), $this->createReflectionNamedType('DateTime', true)],
+            'interface' => [new stdClass(), $this->createReflectionNamedType('DateTimeInterface', false)],
+            'nullable_interface' => [new stdClass(), $this->createReflectionNamedType('DateTimeInterface', true)],
+        ];
+    }
+
+    protected function setUp() : void
+    {
+        $this->validator = new TypeValidator();
+    }
+
 
     private function createReflectionNamedType(string $name, bool $allowsNull) : ReflectionNamedType
     {
