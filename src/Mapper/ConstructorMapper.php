@@ -7,6 +7,7 @@ namespace ObjectMapper\Mapper;
 use ObjectMapper\Extractor\Exception\ExtractionError;
 use ObjectMapper\Mapper\Exception\MappingError;
 use ObjectMapper\Mapping\Constructor;
+use ObjectMapper\Validator\Exception\UnprocessableData;
 use ObjectMapper\Validator\Reflection\MethodValidator;
 use ReflectionClass;
 use ReflectionException;
@@ -35,7 +36,7 @@ final class ConstructorMapper
     {
         try {
             $reflectionClass = new ReflectionClass($target);
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException $exception) {
             throw new MappingError(sprintf('Class "%s" does not exist.', $target));
         }
 
@@ -44,11 +45,10 @@ final class ConstructorMapper
             $mapping = $argument->source();
 
             try {
-                // TODO: refactor to Arguments class
                 $arguments[] = $mapping->extractor()->extract($source, $mapping->data());
             } catch (ExtractionError $exception) {
                 throw new MappingError(
-                    'Unable to determine argument value from provided object.',
+                    'Unable to extract argument value from source.',
                     0,
                     $exception
                 );
@@ -56,11 +56,20 @@ final class ConstructorMapper
         }
 
         $constructorReflectionMethod = $reflectionClass->getConstructor();
-        if (
-            $constructorReflectionMethod !== null
-            && !$this->methodValidator->isValid($arguments, $constructorReflectionMethod)
-        ) {
-            throw new MappingError('TODO: get error message from validators.');
+        if ($constructorReflectionMethod !== null) {
+            try {
+                $context = $this->methodValidator->validate(
+                    MethodValidator::data($arguments, $constructorReflectionMethod)
+                );
+            } catch (UnprocessableData $exception) {
+                throw new MappingError('Unable to validate constructor method arguments.', 0, $exception);
+            }
+
+            $violations = $context->violations();
+
+            if (!empty($violations)) {
+                throw MappingError::violations($violations);
+            }
         }
 
         return new $target(...$arguments);

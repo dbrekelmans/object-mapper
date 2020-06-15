@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Validator\Reflection;
 
+use ObjectMapper\Validator\Context;
+use ObjectMapper\Validator\Exception\UnprocessableData;
 use ObjectMapper\Validator\Reflection\Method\ParameterValidator;
+use ObjectMapper\Validator\Validator;
+use ObjectMapper\Validator\Violation;
 use ReflectionMethod;
 use function array_values;
 use function count;
+use function sprintf;
 
-class MethodValidator
+class MethodValidator implements Validator
 {
     private ParameterValidator $parameterValidator;
 
@@ -19,10 +24,42 @@ class MethodValidator
     }
 
     /** @param array<mixed> $arguments */
-    public function isValid(array $arguments, ReflectionMethod $method) : bool
+    public static function data(array $arguments, ReflectionMethod $method) : MethodValidatorData
     {
-        if (!$this->hasValidArgumentCount(count($arguments), $method)) {
-            return false;
+        return MethodValidatorData::create($arguments, $method);
+    }
+
+    public function validate(object $data, ?Context $context = null) : Context
+    {
+        if (!$data instanceof MethodValidatorData) {
+            throw new UnprocessableData('Use MethodValidator::data() to create a processable data object.');
+        }
+
+        if ($context === null) {
+            $context = Context::create();
+        }
+
+        $method = $data->method();
+        $arguments = $data->arguments();
+
+        $argumentCount = count($arguments);
+
+        $numberOfRequiredParameters = $method->getNumberOfRequiredParameters();
+        if ($argumentCount < $numberOfRequiredParameters) {
+            $context->add(Violation::create(sprintf(
+                '%d arguments provided, but %d parameters are required.',
+                $argumentCount,
+                $numberOfRequiredParameters
+            )));
+        }
+
+        $numberOfParameters = $method->getNumberOfParameters();
+        if ($argumentCount > $numberOfParameters) {
+            $context->add(Violation::create(sprintf(
+                '%d arguments provided, but %d parameters exist.',
+                $argumentCount,
+                $numberOfParameters
+            )));
         }
 
         $parameters = $method->getParameters();
@@ -30,19 +67,49 @@ class MethodValidator
         foreach (array_values($arguments) as $index => $argument) {
             $parameter = $parameters[$index];
 
-            if (!$this->parameterValidator->isValid($argument, $parameter)) {
-                return false;
-            }
+            $context = $this->parameterValidator->validate(ParameterValidator::data($argument, $parameter), $context);
         }
 
-        return true;
+        return $context;
+    }
+}
+
+class MethodValidatorData
+{
+    /**
+     * @psalm-var list<mixed>
+     * @var array<mixed>
+     */
+    private array $arguments;
+    private ReflectionMethod $method;
+
+    /** @param array<mixed> $arguments */
+    private function __construct(array $arguments, ReflectionMethod $method)
+    {
+        $this->arguments = array_values($arguments);
+        $this->method = $method;
     }
 
-    private function hasValidArgumentCount(int $argumentCount, ReflectionMethod $method) : bool
+    /**
+     * @psalm-param list<mixed> $arguments
+     * @param array<mixed> $arguments
+     */
+    public static function create(array $arguments, ReflectionMethod $method) : self
     {
-        return !(
-            $argumentCount < $method->getNumberOfRequiredParameters()
-            || $argumentCount > $method->getNumberOfParameters()
-        );
+        return new self($arguments, $method);
+    }
+
+    /**
+     * @psalm-return list<mixed>
+     * @return array<mixed>
+     */
+    public function arguments() : array
+    {
+        return $this->arguments;
+    }
+
+    public function method() : ReflectionMethod
+    {
+        return $this->method;
     }
 }
