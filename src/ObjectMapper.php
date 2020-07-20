@@ -6,6 +6,7 @@ namespace ObjectMapper;
 
 use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapper\Exception\MappingError;
+use ObjectMapper\Mapper\PropertyMapper;
 use ObjectMapper\Mapping\Exception\NotFound;
 use ObjectMapper\Mapping\Registry;
 use function get_class;
@@ -14,31 +15,40 @@ final class ObjectMapper
 {
     private Registry $registry;
     private ConstructorMapper $constructorMapper;
+    private PropertyMapper $propertyMapper;
 
-    public function __construct(Registry $registry, ConstructorMapper $constructorMapper)
-    {
+    public function __construct(
+        Registry $registry,
+        ConstructorMapper $constructorMapper,
+        PropertyMapper $propertyMapper
+    ) {
         $this->registry = $registry;
         $this->constructorMapper = $constructorMapper;
+        $this->propertyMapper = $propertyMapper;
     }
 
     /**
      * @template T
      *
-     * @psalm-var class-string<T> $target
+     * @psalm-var class-string<T> $targetClass
      *
      * @psalm-return T
      *
      * @throws NotFound
      * @throws MappingError
      */
-    public function map(object $source, string $target) : object
+    public function map(object $source, string $targetClass) : object
     {
-        $mapping = $this->registry->get(get_class($source), $target);
+        $mapping = $this->registry->get(get_class($source), $targetClass);
 
-        $constructed = $this->constructorMapper->map($source, $target, $mapping->constructor());
+        $target = $this->constructorMapper->map($source, $targetClass, $mapping->constructor());
 
-        // TODO: execute property and method mapping
+        foreach ($mapping->properties() as $property) {
+            $this->propertyMapper->map($source, $target, $property);
+        }
 
-        return $constructed;
+        // TODO: Method mapping
+
+        return $target;
     }
 }

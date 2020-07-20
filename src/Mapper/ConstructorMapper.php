@@ -39,7 +39,7 @@ final class ConstructorMapper
         try {
             $reflectionClass = new ReflectionClass($target);
         } catch (ReflectionException $exception) {
-            throw new MappingError(sprintf('Class "%s" does not exist.', $target));
+            throw new MappingError(sprintf('Class "%s" does not exist.', $target), 0, $exception);
         }
 
         $arguments = $this->extractArgumentsFromSource($source, $constructor->arguments());
