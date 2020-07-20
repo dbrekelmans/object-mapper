@@ -9,7 +9,7 @@ use ObjectMapper\Validator\Exception\UnprocessableData;
 interface Validator
 {
     /**
-     * @throws UnprocessableData
+     * @throws UnprocessableData When data object can not be processed.
      */
     public function validate(object $data, ?Context $context = null) : Context;
 }

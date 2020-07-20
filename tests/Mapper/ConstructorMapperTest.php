@@ -9,7 +9,7 @@ use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapping\Argument;
 use ObjectMapper\Mapping\Constructor;
 use ObjectMapper\Mapping\Source;
-use ObjectMapper\Validator\Reflection\MethodValidator;
+use ObjectMapper\Validator\Reflection\InternalMethodValidator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function array_values;
@@ -34,7 +34,7 @@ final class ConstructorMapperTest extends TestCase
             $parameters[] = Argument::create(Source::create($extractor, $expectedValue));
         }
 
-        $methodValidator = $this->createStub(MethodValidator::class);
+        $methodValidator = $this->createStub(InternalMethodValidator::class);
         $methodValidator->method('isValid')->willReturn(true);
 
         $mapper = new ConstructorMapper($methodValidator);
@@ -65,8 +65,12 @@ final class ZeroParameterConstructor
 
 final class OneParameterConstructor
 {
+    /** @var mixed */
     public $propertyOne;
 
+    /**
+     * @param mixed $propertyOne
+     */
     public function __construct($propertyOne)
     {
         $this->propertyOne = $propertyOne;
@@ -75,9 +79,15 @@ final class OneParameterConstructor
 
 final class TwoParameterConstructor
 {
+    /** @var mixed */
     public $propertyOne;
+    /** @var mixed */
     public $propertyTwo;
 
+    /**
+     * @param mixed $propertyOne
+     * @param mixed $propertyTwo
+     */
     public function __construct($propertyOne, $propertyTwo)
     {
         $this->propertyOne = $propertyOne;

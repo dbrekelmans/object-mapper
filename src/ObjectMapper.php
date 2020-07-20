@@ -8,6 +8,9 @@ use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapper\Exception\MappingError;
 use ObjectMapper\Mapping\Exception\NotFound;
 use ObjectMapper\Mapping\Registry;
+use ObjectMapper\Validator\Reflection\InternalMethodValidator;
+use ObjectMapper\Validator\Reflection\InternalParameterValidator;
+use ObjectMapper\Validator\Reflection\InternalTypeValidator;
 use function get_class;
 
 final class ObjectMapper
@@ -33,9 +36,8 @@ final class ObjectMapper
     {
         $mapping = $this->registry->get(get_class($source), $target);
 
-        $constructed = (new ConstructorMapper())->map($source, $target, $mapping->constructor());
-
-        $constructed;
+        $mapper = new ConstructorMapper(new InternalMethodValidator(new InternalParameterValidator(new InternalTypeValidator())));
+        $constructed = $mapper->map($source, $target, $mapping->constructor());
 
         // TODO: execute property and method mapping
 

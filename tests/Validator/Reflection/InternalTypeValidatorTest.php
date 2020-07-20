@@ -5,26 +5,27 @@ declare(strict_types=1);
 namespace ObjectMapper\Tests\Validator\Reflection;
 
 use DateTime;
-use ObjectMapper\Validator\Reflection\TypeValidator;
+use ObjectMapper\Validator\Reflection\InternalTypeValidator;
+use ObjectMapper\Validator\Reflection\TypeValidatorData;
 use PHPUnit\Framework\TestCase;
 use ReflectionNamedType;
 use ReflectionType;
 use stdClass;
 
-final class TypeValidatorTest extends TestCase
+final class InternalTypeValidatorTest extends TestCase
 {
-    private TypeValidator $validator;
+    private InternalTypeValidator $validator;
 
     /**
      * @dataProvider validateValidTypeDataProvider
      *
-     * @covers       \ObjectMapper\Validator\Reflection\TypeValidator::validate
+     * @covers       InternalTypeValidator::validate
      *
      * @param mixed $value
      */
     public function testValidateValidType($value, ReflectionType $type) : void
     {
-        $context = $this->validator->validate(TypeValidator::data($value, $type));
+        $context = $this->validator->validate(TypeValidatorData::create($value, $type));
 
         self::assertCount(0, $context->violations());
     }
@@ -60,13 +61,13 @@ final class TypeValidatorTest extends TestCase
     /**
      * @dataProvider validateInvalidTypeDataProvider
      *
-     * @covers       \ObjectMapper\Validator\Reflection\TypeValidator::validate
+     * @covers       InternalTypeValidator::validate
      *
      * @param mixed $value
      */
     public function testValidateInvalidType($value, ReflectionType $type) : void
     {
-        $context = $this->validator->validate(TypeValidator::data($value, $type));
+        $context = $this->validator->validate(TypeValidatorData::create($value, $type));
         $violations = $context->violations();
 
         self::assertCount(1, $violations);
@@ -88,7 +89,7 @@ final class TypeValidatorTest extends TestCase
 
     protected function setUp() : void
     {
-        $this->validator = new TypeValidator();
+        $this->validator = new InternalTypeValidator();
     }
 
 

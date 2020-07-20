@@ -6,11 +6,14 @@ namespace ObjectMapper\Mapper;
 
 use ObjectMapper\Extractor\Exception\ExtractionError;
 use ObjectMapper\Mapper\Exception\MappingError;
+use ObjectMapper\Mapping\Argument;
 use ObjectMapper\Mapping\Constructor;
 use ObjectMapper\Validator\Exception\UnprocessableData;
 use ObjectMapper\Validator\Reflection\MethodValidator;
+use ObjectMapper\Validator\Reflection\MethodValidatorData;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionMethod;
 use function sprintf;
 
 /** @internal */
@@ -40,9 +43,28 @@ final class ConstructorMapper
             throw new MappingError(sprintf('Class "%s" does not exist.', $target));
         }
 
+        $arguments = $this->extractArgumentsFromSource($source, $constructor->arguments());
+
+        $constructorReflectionMethod = $reflectionClass->getConstructor();
+        if ($constructorReflectionMethod !== null) {
+            $this->validateTargetConstructor($arguments, $constructorReflectionMethod);
+        }
+
+        return new $target(...$arguments);
+    }
+
+    /**
+     * @param array<Argument>|Argument[] $mappingArguments
+     *
+     * @return array<mixed>
+     *
+     * @throws MappingError
+     */
+    private function extractArgumentsFromSource(object $source, array $mappingArguments) : array
+    {
         $arguments = [];
-        foreach ($constructor->arguments() as $argument) {
-            $mapping = $argument->source();
+        foreach ($mappingArguments as $mappingArgument) {
+            $mapping = $mappingArgument->source();
 
             try {
                 $arguments[] = $mapping->extractor()->extract($source, $mapping->data());
@@ -55,23 +77,28 @@ final class ConstructorMapper
             }
         }
 
-        $constructorReflectionMethod = $reflectionClass->getConstructor();
-        if ($constructorReflectionMethod !== null) {
-            try {
-                $context = $this->methodValidator->validate(
-                    MethodValidator::data($arguments, $constructorReflectionMethod)
-                );
-            } catch (UnprocessableData $exception) {
-                throw new MappingError('Unable to validate constructor method arguments.', 0, $exception);
-            }
+        return $arguments;
+    }
 
-            $violations = $context->violations();
-
-            if (!empty($violations)) {
-                throw MappingError::violations($violations);
-            }
+    /**
+     * @param array<mixed> $arguments
+     *
+     * @throws MappingError
+     */
+    private function validateTargetConstructor(array $arguments, ReflectionMethod $constructorReflectionMethod) : void
+    {
+        try {
+            $context = $this->methodValidator->validate(
+                MethodValidatorData::create($arguments, $constructorReflectionMethod)
+            );
+        } catch (UnprocessableData $exception) {
+            throw new MappingError('Unable to validate constructor method arguments.', 0, $exception);
         }
 
-        return new $target(...$arguments);
+        $violations = $context->violations();
+
+        if (!empty($violations)) {
+            throw MappingError::violations($violations);
+        }
     }
 }
