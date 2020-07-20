@@ -16,7 +16,6 @@ use ReflectionException;
 use ReflectionMethod;
 use function sprintf;
 
-/** @internal */
 final class ConstructorMapper
 {
     private MethodValidator $methodValidator;
