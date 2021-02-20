@@ -13,12 +13,12 @@ final class Violation
         $this->message = $message;
     }
 
-    public static function create(string $message) : self
+    public static function create(string $message): self
     {
         return new self($message);
     }
 
-    public function message() : string
+    public function message(): string
     {
         return $this->message;
     }

@@ -17,7 +17,7 @@ final class InternalParameterValidator implements ParameterValidator
         $this->typeValidator = $typeValidator;
     }
 
-    public function validate(object $data, ?Context $context = null) : Context
+    public function validate(object $data, ?Context $context = null): Context
     {
         if (!$data instanceof ParameterValidatorData) {
             throw UnprocessableData::expectedClass(ParameterValidatorData::class);

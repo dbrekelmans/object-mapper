@@ -9,6 +9,7 @@ use ObjectMapper\Mapper\Exception\MappingError;
 use ObjectMapper\Mapper\PropertyMapper;
 use ObjectMapper\Mapping\Exception\NotFound;
 use ObjectMapper\Mapping\Registry;
+
 use function get_class;
 
 final class ObjectMapper
@@ -37,7 +38,7 @@ final class ObjectMapper
      * @throws NotFound
      * @throws MappingError
      */
-    public function map(object $source, string $targetClass) : object
+    public function map(object $source, string $targetClass): object
     {
         $mapping = $this->registry->get(get_class($source), $targetClass);
 

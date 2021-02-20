@@ -6,13 +6,15 @@ namespace ObjectMapper\Mapper\Exception;
 
 use LogicException;
 use ObjectMapper\Validator\Violation;
+
 use function implode;
+
 use const PHP_EOL;
 
 final class MappingError extends LogicException
 {
     /** @param array<Violation>|Violation[] $violations */
-    public static function violations(array $violations) : self
+    public static function violations(array $violations): self
     {
         $violationMessages = [];
 

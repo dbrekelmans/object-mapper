@@ -15,17 +15,17 @@ final class Property
         $this->source = $source;
     }
 
-    public static function create(string $name, Source $source/*, array $constraints, array $transformers*/) : self
+    public static function create(string $name, Source $source/*, array $constraints, array $transformers*/): self
     {
         return new self($name, $source/*, $constraints, $transformers*/);
     }
 
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function source() : Source
+    public function source(): Source
     {
         return $this->source;
     }

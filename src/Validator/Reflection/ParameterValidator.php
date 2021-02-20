@@ -13,5 +13,5 @@ interface ParameterValidator extends Validator
     /**
      * @throws UnprocessableData When $data is not an instance of ParameterValidatorData.
      */
-    public function validate(object $data, ?Context $context = null) : Context;
+    public function validate(object $data, ?Context $context = null): Context;
 }

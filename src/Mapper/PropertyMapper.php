@@ -17,7 +17,7 @@ final class PropertyMapper
      *
      * @throws MappingError
      */
-    public function map(object $source, object $target, Property $property) : void
+    public function map(object $source, object $target, Property $property): void
     {
         $propertySource = $property->source();
 

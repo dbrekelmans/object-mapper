@@ -6,6 +6,7 @@ namespace ObjectMapper\Mapping;
 
 use ObjectMapper\Mapping\Exception\DuplicateEntry;
 use ObjectMapper\Mapping\Exception\NotFound;
+
 use function md5;
 use function sprintf;
 
@@ -15,7 +16,7 @@ final class Registry
     private array $registry = [];
 
     /** @throws DuplicateEntry */
-    public function add(Mapping $mapping) : void
+    public function add(Mapping $mapping): void
     {
         $source = $mapping->source();
         $target = $mapping->target();
@@ -37,7 +38,7 @@ final class Registry
      *
      * @throws NotFound
      */
-    public function get(string $source, string $target) : Mapping
+    public function get(string $source, string $target): Mapping
     {
         if (!$this->has($source, $target)) {
             throw new NotFound(sprintf('No mapping registered from source "%s" to target "%s"', $source, $target));
@@ -50,7 +51,7 @@ final class Registry
      * @psalm-var class-string $source
      * @psalm-var class-string $target
      */
-    private function has(string $source, string $target) : bool
+    private function has(string $source, string $target): bool
     {
         return isset($this->registry[$this->generateIndex($source, $target)]);
     }
@@ -59,7 +60,7 @@ final class Registry
      * @psalm-var class-string $source
      * @psalm-var class-string $target
      */
-    private function generateIndex(string $source, string $target) : string
+    private function generateIndex(string $source, string $target): string
     {
         return md5($source . $target);
     }

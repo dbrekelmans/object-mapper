@@ -25,7 +25,7 @@ final class Constructor
     /**
      * @param array<Argument> $arguments
      */
-    public static function create(array $arguments) : self
+    public static function create(array $arguments): self
     {
         return new self($arguments);
     }
@@ -34,7 +34,7 @@ final class Constructor
      * @psalm-return list<Argument>
      * @return array<int, Argument>|Argument[]
      */
-    public function arguments() : array
+    public function arguments(): array
     {
         return $this->arguments;
     }

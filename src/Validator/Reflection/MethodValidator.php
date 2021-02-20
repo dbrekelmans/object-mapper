@@ -13,5 +13,5 @@ interface MethodValidator extends Validator
     /**
      * @throws UnprocessableData When $data is not an instance of MethodValidatorData.
      */
-    public function validate(object $data, ?Context $context = null) : Context;
+    public function validate(object $data, ?Context $context = null): Context;
 }

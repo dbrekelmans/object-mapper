@@ -20,7 +20,7 @@ final class ParameterValidatorData
     }
 
     /** @param mixed $value */
-    public static function create($value, ReflectionParameter $parameter) : self
+    public static function create($value, ReflectionParameter $parameter): self
     {
         return new self($value, $parameter);
     }
@@ -31,7 +31,7 @@ final class ParameterValidatorData
         return $this->value;
     }
 
-    public function parameter() : ReflectionParameter
+    public function parameter(): ReflectionParameter
     {
         return $this->parameter;
     }

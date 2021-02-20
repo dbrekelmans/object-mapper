@@ -7,6 +7,7 @@ namespace ObjectMapper\Validator\Reflection;
 use ObjectMapper\Validator\Context;
 use ObjectMapper\Validator\Exception\UnprocessableData;
 use ObjectMapper\Validator\Violation;
+
 use function array_values;
 use function count;
 use function sprintf;
@@ -21,7 +22,7 @@ final class InternalMethodValidator implements MethodValidator
         $this->parameterValidator = $parameterValidator;
     }
 
-    public function validate(object $data, ?Context $context = null) : Context
+    public function validate(object $data, ?Context $context = null): Context
     {
         if (!$data instanceof MethodValidatorData) {
             throw UnprocessableData::expectedClass(MethodValidatorData::class);

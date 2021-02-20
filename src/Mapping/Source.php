@@ -17,17 +17,17 @@ final class Source
         $this->data = $data;
     }
 
-    public static function create(Extractor $extractor, string $value) : self
+    public static function create(Extractor $extractor, string $value): self
     {
         return new self($extractor, $value);
     }
 
-    public function extractor() : Extractor
+    public function extractor(): Extractor
     {
         return $this->extractor;
     }
 
-    public function data() : string
+    public function data(): string
     {
         return $this->data;
     }

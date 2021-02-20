@@ -13,12 +13,12 @@ final class Argument
         $this->source = $source;
     }
 
-    public static function create(Source $source) : self
+    public static function create(Source $source): self
     {
         return new self($source);
     }
 
-    public function source() : Source
+    public function source(): Source
     {
         return $this->source;
     }

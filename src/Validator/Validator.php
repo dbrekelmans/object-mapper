@@ -11,5 +11,5 @@ interface Validator
     /**
      * @throws UnprocessableData When data object can not be processed.
      */
-    public function validate(object $data, ?Context $context = null) : Context;
+    public function validate(object $data, ?Context $context = null): Context;
 }

@@ -7,6 +7,7 @@ namespace ObjectMapper\Extractor;
 use ObjectMapper\Extractor\Exception\NotAccessible;
 use ReflectionException;
 use ReflectionProperty;
+
 use function get_class;
 use function sprintf;
 

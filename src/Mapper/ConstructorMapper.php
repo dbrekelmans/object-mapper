@@ -14,6 +14,7 @@ use ObjectMapper\Validator\Reflection\MethodValidatorData;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+
 use function sprintf;
 
 final class ConstructorMapper
@@ -34,7 +35,7 @@ final class ConstructorMapper
      *
      * @throws MappingError
      */
-    public function map(object $source, string $target, Constructor $constructor) : object
+    public function map(object $source, string $target, Constructor $constructor): object
     {
         try {
             $reflectionClass = new ReflectionClass($target);
@@ -59,7 +60,7 @@ final class ConstructorMapper
      *
      * @throws MappingError
      */
-    private function extractArgumentsFromSource(object $source, array $mappingArguments) : array
+    private function extractArgumentsFromSource(object $source, array $mappingArguments): array
     {
         $arguments = [];
         foreach ($mappingArguments as $mappingArgument) {
@@ -84,7 +85,7 @@ final class ConstructorMapper
      *
      * @throws MappingError
      */
-    private function validateTargetConstructor(array $arguments, ReflectionMethod $constructorReflectionMethod) : void
+    private function validateTargetConstructor(array $arguments, ReflectionMethod $constructorReflectionMethod): void
     {
         try {
             $context = $this->methodValidator->validate(

@@ -20,7 +20,7 @@ final class TypeValidatorData
     }
 
     /** @param mixed $value */
-    public static function create($value, ReflectionType $reflectionType) : self
+    public static function create($value, ReflectionType $reflectionType): self
     {
         return new self($value, $reflectionType);
     }
@@ -31,7 +31,7 @@ final class TypeValidatorData
         return $this->value;
     }
 
-    public function type() : ReflectionType
+    public function type(): ReflectionType
     {
         return $this->type;
     }

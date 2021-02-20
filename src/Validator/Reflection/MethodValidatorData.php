@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ObjectMapper\Validator\Reflection;
 
 use ReflectionMethod;
+
 use function array_values;
 
 final class MethodValidatorData
@@ -27,7 +28,7 @@ final class MethodValidatorData
      * @psalm-param list<mixed> $arguments
      * @param array<mixed> $arguments
      */
-    public static function create(array $arguments, ReflectionMethod $method) : self
+    public static function create(array $arguments, ReflectionMethod $method): self
     {
         return new self($arguments, $method);
     }
@@ -36,12 +37,12 @@ final class MethodValidatorData
      * @psalm-return list<mixed>
      * @return array<mixed>
      */
-    public function arguments() : array
+    public function arguments(): array
     {
         return $this->arguments;
     }
 
-    public function method() : ReflectionMethod
+    public function method(): ReflectionMethod
     {
         return $this->method;
     }

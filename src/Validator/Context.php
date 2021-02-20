@@ -13,18 +13,18 @@ final class Context
     {
     }
 
-    public static function create() : self
+    public static function create(): self
     {
         return new self();
     }
 
-    public function add(Violation $violation) : void
+    public function add(Violation $violation): void
     {
         $this->violations[] = $violation;
     }
 
     /** @return array<Violation> */
-    public function violations() : array
+    public function violations(): array
     {
         return $this->violations;
     }

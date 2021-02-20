@@ -9,12 +9,13 @@ use ObjectMapper\Validator\Exception\UnprocessableData;
 use ObjectMapper\Validator\Violation;
 use ReflectionNamedType;
 use SebastianBergmann\Type\Type;
+
 use function sprintf;
 
 /** @internal */
 final class InternalTypeValidator implements TypeValidator
 {
-    public function validate(object $data, ?Context $context = null) : Context
+    public function validate(object $data, ?Context $context = null): Context
     {
         if (!$data instanceof TypeValidatorData) {
             throw UnprocessableData::expectedClass(TypeValidatorData::class);
