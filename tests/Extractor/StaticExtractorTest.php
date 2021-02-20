@@ -10,7 +10,6 @@ use stdClass;
 
 final class StaticExtractorTest extends TestCase
 {
-    /** @covers \ObjectMapper\Extractor\StaticExtractor::extract */
     public function testExtract() : void
     {
         $expected = 'static value';

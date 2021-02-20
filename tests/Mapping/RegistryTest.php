@@ -13,7 +13,6 @@ use stdClass;
 
 final class RegistryTest extends TestCase
 {
-    /** @covers \ObjectMapper\Mapping\Registry::add */
     public function testAdd() : void
     {
         $source = stdClass::class;
@@ -29,7 +28,6 @@ final class RegistryTest extends TestCase
         self::assertSame($mapping, $registry->get($source, $target));
     }
 
-    /** @covers \ObjectMapper\Mapping\Registry::add */
     public function testAddDuplicate() : void
     {
         $source = stdClass::class;
@@ -46,7 +44,6 @@ final class RegistryTest extends TestCase
         $registry->add($mapping);
     }
 
-    /** @covers \ObjectMapper\Mapping\Registry::get */
     public function testGet() : void
     {
         $source = stdClass::class;
@@ -62,7 +59,6 @@ final class RegistryTest extends TestCase
         self::assertSame($mapping, $registry->get($source, $target));
     }
 
-    /** @covers \ObjectMapper\Mapping\Registry::get */
     public function testGetNotFound() : void
     {
         $registry = new Registry();

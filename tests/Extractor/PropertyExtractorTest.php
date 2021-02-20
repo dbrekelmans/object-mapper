@@ -12,7 +12,6 @@ final class PropertyExtractorTest extends TestCase
 {
     private PropertyExtractor $extractor;
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testNonExistentProperty() : void
     {
         $source = new class () {
@@ -22,7 +21,6 @@ final class PropertyExtractorTest extends TestCase
         $this->extractor->extract($source, 'property');
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testUninitializedProperty() : void
     {
         $source = new class () {
@@ -33,7 +31,6 @@ final class PropertyExtractorTest extends TestCase
         $this->extractor->extract($source, 'property');
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPublicProperty() : void
     {
         $source = new class () {
@@ -43,7 +40,6 @@ final class PropertyExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($source, 'property'));
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPublicStaticProperty() : void
     {
         $source = new class () {
@@ -53,7 +49,6 @@ final class PropertyExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($source, 'property'));
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractProtectedProperty() : void
     {
         $source = new class () {
@@ -64,7 +59,6 @@ final class PropertyExtractorTest extends TestCase
         $this->extractor->extract($source, 'property');
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractProtectedStaticProperty() : void
     {
         $source = new class () {
@@ -75,7 +69,6 @@ final class PropertyExtractorTest extends TestCase
         $this->extractor->extract($source, 'property');
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPrivateProperty() : void
     {
         $source = new class () {
@@ -86,7 +79,6 @@ final class PropertyExtractorTest extends TestCase
         $this->extractor->extract($source, 'property');
     }
 
-    /** @covers \ObjectMapper\Extractor\PropertyExtractor::extract */
     public function testExtractPrivateStaticProperty() : void
     {
         $source = new class () {

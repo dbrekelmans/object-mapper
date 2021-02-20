@@ -19,8 +19,6 @@ final class InternalTypeValidatorTest extends TestCase
     /**
      * @dataProvider validateValidTypeDataProvider
      *
-     * @covers       InternalTypeValidator::validate
-     *
      * @param mixed $value
      */
     public function testValidateValidType($value, ReflectionType $type) : void
@@ -60,8 +58,6 @@ final class InternalTypeValidatorTest extends TestCase
 
     /**
      * @dataProvider validateInvalidTypeDataProvider
-     *
-     * @covers       InternalTypeValidator::validate
      *
      * @param mixed $value
      */

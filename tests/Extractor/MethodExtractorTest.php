@@ -12,7 +12,6 @@ final class MethodExtractorTest extends TestCase
 {
     private MethodExtractor $extractor;
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testNonExistentMethod() : void
     {
         $source = new class () {
@@ -22,7 +21,6 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testVoidMethod() : void
     {
         $source = new class () {
@@ -34,7 +32,6 @@ final class MethodExtractorTest extends TestCase
         self::assertNull($this->extractor->extract($source, 'method'));
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPublicMethod() : void
     {
         $source = new class () {
@@ -47,7 +44,6 @@ final class MethodExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($source, 'method'));
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPublicStaticMethod() : void
     {
         $source = new class () {
@@ -60,7 +56,6 @@ final class MethodExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($source, 'method'));
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractProtectedMethod() : void
     {
         $source = new class () {
@@ -74,7 +69,6 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractProtectedStaticMethod() : void
     {
         $source = new class () {
@@ -88,7 +82,6 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPrivateMethod() : void
     {
         $source = new class () {
@@ -102,7 +95,6 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    /** @covers \ObjectMapper\Extractor\MethodExtractor::extract */
     public function testExtractPrivateStaticMethod() : void
     {
         $source = new class () {
