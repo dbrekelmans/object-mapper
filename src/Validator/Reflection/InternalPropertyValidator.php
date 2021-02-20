@@ -8,7 +8,7 @@ use ObjectMapper\Validator\Context;
 use ObjectMapper\Validator\Exception\UnprocessableData;
 
 /** @internal */
-final class InternalParameterValidator implements ParameterValidator
+final class InternalPropertyValidator implements PropertyValidator
 {
     private TypeValidator $typeValidator;
 
@@ -19,23 +19,23 @@ final class InternalParameterValidator implements ParameterValidator
 
     public function validate(object $data, ?Context $context = null) : Context
     {
-        if (!$data instanceof ParameterValidatorData) {
-            throw UnprocessableData::expectedClass(ParameterValidatorData::class);
+        if (!$data instanceof PropertyValidatorData) {
+            throw UnprocessableData::expectedClass(PropertyValidatorData::class);
         }
 
         if ($context === null) {
             $context = Context::create();
         }
 
-        $parameter = $data->parameter();
+        $property = $data->property();
 
-        if (!$parameter->hasType()) {
+        if (!$property->hasType()) {
             return $context;
         }
 
         /** @psalm-suppress PossiblyNullArgument */
         return $this->typeValidator->validate(
-            TypeValidatorData::create($data->value(), $parameter->getType()),
+            TypeValidatorData::create($data->value(), $property->getType()),
             $context
         );
     }
