@@ -9,7 +9,9 @@ use ObjectMapper\Mapper\ConstructorMapper;
 use ObjectMapper\Mapping\Argument;
 use ObjectMapper\Mapping\Constructor;
 use ObjectMapper\Mapping\Source;
+use ObjectMapper\Validator\Context;
 use ObjectMapper\Validator\Reflection\InternalMethodValidator;
+use ObjectMapper\Validator\Reflection\MethodValidator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function array_values;
@@ -32,8 +34,8 @@ final class ConstructorMapperTest extends TestCase
             $parameters[] = Argument::create(Source::create($extractor, $expectedValue));
         }
 
-        $methodValidator = $this->createStub(InternalMethodValidator::class);
-        $methodValidator->method('isValid')->willReturn(true);
+        $methodValidator = $this->createStub(MethodValidator::class);
+        $methodValidator->method('validate')->willReturn(Context::create());
 
         $mapper = new ConstructorMapper($methodValidator);
 
