@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ObjectMapper\Validator\Reflection;
 
-
 use ObjectMapper\Validator\Context;
 use ObjectMapper\Validator\Exception\UnprocessableData;
 use ObjectMapper\Validator\Validator;
@@ -14,5 +13,5 @@ interface PropertyValidator extends Validator
     /**
      * @throws UnprocessableData When $data is not an instance of PropertyValidatorData.
      */
-    public function validate(object $data, ?Context $context = null) : Context;
+    public function validate(object $data, ?Context $context = null): Context;
 }

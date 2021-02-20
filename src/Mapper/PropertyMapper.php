@@ -13,6 +13,9 @@ use ObjectMapper\Validator\Reflection\PropertyValidatorData;
 use ReflectionException;
 use ReflectionProperty;
 
+use function get_class;
+use function sprintf;
+
 final class PropertyMapper
 {
     private PropertyValidator $propertyValidator;
@@ -31,7 +34,7 @@ final class PropertyMapper
      *
      * @throws MappingError
      */
-    public function map(object $source, object $target, Property $property) : object
+    public function map(object $source, object $target, Property $property): object
     {
         $propertySource = $property->source();
 
@@ -63,7 +66,7 @@ final class PropertyMapper
      *
      * @throws MappingError
      */
-    private function validateTargetProperty($value, ReflectionProperty $reflectionProperty) : void
+    private function validateTargetProperty($value, ReflectionProperty $reflectionProperty): void
     {
         try {
             $context = $this->propertyValidator->validate(

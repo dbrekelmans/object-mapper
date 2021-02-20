@@ -17,7 +17,7 @@ final class InternalPropertyValidator implements PropertyValidator
         $this->typeValidator = $typeValidator;
     }
 
-    public function validate(object $data, ?Context $context = null) : Context
+    public function validate(object $data, ?Context $context = null): Context
     {
         if (!$data instanceof PropertyValidatorData) {
             throw UnprocessableData::expectedClass(PropertyValidatorData::class);

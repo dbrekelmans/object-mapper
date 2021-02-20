@@ -50,6 +50,7 @@ final class ConstructorMapper
             $this->validateTargetConstructor($arguments, $constructorReflectionMethod);
         }
 
+        /** @psalm-suppress MixedMethodCall */
         return new $target(...$arguments);
     }
 
