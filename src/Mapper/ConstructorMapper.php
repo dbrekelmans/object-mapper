@@ -50,13 +50,14 @@ final class ConstructorMapper
             $this->validateTargetConstructor($arguments, $constructorReflectionMethod);
         }
 
+        /** @psalm-suppress MixedMethodCall */
         return new $target(...$arguments);
     }
 
     /**
      * @param array<Argument>|Argument[] $mappingArguments
      *
-     * @return array<mixed>
+     * @return list<mixed>
      *
      * @throws MappingError
      */
@@ -67,6 +68,7 @@ final class ConstructorMapper
             $mapping = $mappingArgument->source();
 
             try {
+                /** @psalm-suppress MixedAssignment */
                 $arguments[] = $mapping->extractor()->extract($source, $mapping->data());
             } catch (ExtractionError $exception) {
                 throw new MappingError(
@@ -81,7 +83,7 @@ final class ConstructorMapper
     }
 
     /**
-     * @param array<mixed> $arguments
+     * @param list<mixed> $arguments
      *
      * @throws MappingError
      */

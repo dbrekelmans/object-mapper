@@ -57,6 +57,7 @@ final class InternalMethodValidator implements MethodValidator
 
         $parameters = $method->getParameters();
 
+        /** @psalm-suppress MixedAssignment */
         foreach (array_values($arguments) as $index => $argument) {
             $parameter = $parameters[$index];
 

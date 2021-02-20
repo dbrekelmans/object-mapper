@@ -33,6 +33,7 @@ final class InternalParameterValidator implements ParameterValidator
             return $context;
         }
 
+        /** @psalm-suppress PossiblyNullArgument */
         return $this->typeValidator->validate(
             TypeValidatorData::create($data->value(), $parameter->getType()),
             $context

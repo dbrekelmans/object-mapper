@@ -33,6 +33,7 @@ final class ObjectMapper
      *
      * @psalm-var class-string<T> $targetClass
      *
+     * @psalm-suppress InvalidReturnType
      * @psalm-return T
      *
      * @throws NotFound
@@ -42,6 +43,7 @@ final class ObjectMapper
     {
         $mapping = $this->registry->get(get_class($source), $targetClass);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         $target = $this->constructorMapper->map($source, $targetClass, $mapping->constructor());
 
         foreach ($mapping->properties() as $property) {
@@ -50,6 +52,7 @@ final class ObjectMapper
 
         // TODO: Method mapping
 
+        /** @psalm-suppress InvalidReturnStatement */
         return $target;
     }
 }

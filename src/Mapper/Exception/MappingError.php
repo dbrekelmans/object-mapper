@@ -19,7 +19,7 @@ final class MappingError extends LogicException
         $violationMessages = [];
 
         foreach ($violations as $violation) {
-            $violationMessages = '\t• ' . $violation->message();
+            $violationMessages[] = '\t• ' . $violation->message();
         }
 
         return new self('The following violations were found: ' . PHP_EOL . implode(PHP_EOL, $violationMessages));

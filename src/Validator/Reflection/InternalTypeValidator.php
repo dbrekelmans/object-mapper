@@ -26,6 +26,7 @@ final class InternalTypeValidator implements TypeValidator
         }
 
         $reflectionType = $data->type();
+        /** @psalm-suppress MixedAssignment */
         $value = $data->value();
 
         if ($reflectionType instanceof ReflectionNamedType) {
