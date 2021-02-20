@@ -33,11 +33,12 @@ final class ObjectMapper
      *
      * @psalm-var class-string<T> $targetClass
      *
-     * @psalm-suppress InvalidReturnType
      * @psalm-return T
      *
      * @throws NotFound
      * @throws MappingError
+     *
+     * @psalm-suppress InvalidReturnType
      */
     public function map(object $source, string $targetClass): object
     {
