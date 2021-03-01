@@ -33,10 +33,10 @@ final class Registry
     }
 
     /**
+     * @throws NotFound
+     *
      * @psalm-var class-string $source
      * @psalm-var class-string $target
-     *
-     * @throws NotFound
      */
     public function get(string $source, string $target): Mapping
     {

@@ -23,21 +23,18 @@ final class ObjectMapper
         ConstructorMapper $constructorMapper,
         PropertyMapper $propertyMapper
     ) {
-        $this->registry = $registry;
+        $this->registry          = $registry;
         $this->constructorMapper = $constructorMapper;
-        $this->propertyMapper = $propertyMapper;
+        $this->propertyMapper    = $propertyMapper;
     }
 
     /**
-     * @template T
-     *
-     * @psalm-var class-string<T> $targetClass
-     *
-     * @psalm-return T
-     *
      * @throws NotFound
      * @throws MappingError
      *
+     * @template T
+     * @psalm-var class-string<T> $targetClass
+     * @psalm-return T
      * @psalm-suppress InvalidReturnType
      */
     public function map(object $source, string $targetClass): object

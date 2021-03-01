@@ -11,7 +11,7 @@ final class Property
 
     private function __construct(string $name, Source $source/*, array $constraints, array $transformers*/)
     {
-        $this->name = $name;
+        $this->name   = $name;
         $this->source = $source;
     }
 

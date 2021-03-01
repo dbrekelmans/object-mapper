@@ -15,7 +15,7 @@ final class PropertyValidatorData
     /** @param mixed $value */
     private function __construct($value, ReflectionProperty $property)
     {
-        $this->value = $value;
+        $this->value    = $value;
         $this->property = $property;
     }
 

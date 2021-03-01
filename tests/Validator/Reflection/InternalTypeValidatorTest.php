@@ -17,11 +17,11 @@ final class InternalTypeValidatorTest extends TestCase
     private InternalTypeValidator $validator;
 
     /**
-     * @dataProvider validateValidTypeDataProvider
-     *
      * @param mixed $value
+     *
+     * @dataProvider validateValidTypeDataProvider
      */
-    public function testValidateValidType($value, ReflectionType $type) : void
+    public function testValidateValidType($value, ReflectionType $type): void
     {
         $context = $this->validator->validate(TypeValidatorData::create($value, $type));
 
@@ -29,7 +29,7 @@ final class InternalTypeValidatorTest extends TestCase
     }
 
     /** @return array<string, array<mixed>> */
-    public function validateValidTypeDataProvider() : array
+    public function validateValidTypeDataProvider(): array
     {
         return [
             'boolean' => [true, $this->createReflectionNamedType('bool', false)],
@@ -57,20 +57,20 @@ final class InternalTypeValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider validateInvalidTypeDataProvider
-     *
      * @param mixed $value
+     *
+     * @dataProvider validateInvalidTypeDataProvider
      */
-    public function testValidateInvalidType($value, ReflectionType $type) : void
+    public function testValidateInvalidType($value, ReflectionType $type): void
     {
-        $context = $this->validator->validate(TypeValidatorData::create($value, $type));
+        $context    = $this->validator->validate(TypeValidatorData::create($value, $type));
         $violations = $context->violations();
 
         self::assertCount(1, $violations);
     }
 
     /** @return array<string, array<mixed>> */
-    public function validateInvalidTypeDataProvider() : array
+    public function validateInvalidTypeDataProvider(): array
     {
         return [
             'native_type' => [0, $this->createReflectionNamedType('bool', false)],
@@ -83,13 +83,12 @@ final class InternalTypeValidatorTest extends TestCase
         ];
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new InternalTypeValidator();
     }
 
-
-    private function createReflectionNamedType(string $name, bool $allowsNull) : ReflectionNamedType
+    private function createReflectionNamedType(string $name, bool $allowsNull): ReflectionNamedType
     {
         $reflectionType = $this->createStub(ReflectionNamedType::class);
 

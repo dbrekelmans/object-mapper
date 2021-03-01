@@ -16,7 +16,7 @@ final class InternalParameterValidatorTest extends TestCase
     private InternalParameterValidator $validator;
     private TypeValidator $typeValidator;
 
-    public function testValidateWithoutType() : void
+    public function testValidateWithoutType(): void
     {
         $parameter = $this->createStub(ReflectionParameter::class);
         $parameter->method('hasType')->willReturn(false);
@@ -27,7 +27,7 @@ final class InternalParameterValidatorTest extends TestCase
         self::assertCount(0, $context->violations());
     }
 
-    public function testValidateWithType() : void
+    public function testValidateWithType(): void
     {
         $parameter = $this->createStub(ReflectionParameter::class);
         $parameter->method('hasType')->willReturn(true);
@@ -39,12 +39,10 @@ final class InternalParameterValidatorTest extends TestCase
         self::assertCount(0, $context->violations());
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->typeValidator = $this->createMock(TypeValidator::class);
 
         $this->validator = new InternalParameterValidator($this->typeValidator);
     }
-
-
 }

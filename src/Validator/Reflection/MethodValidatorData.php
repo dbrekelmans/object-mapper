@@ -21,12 +21,13 @@ final class MethodValidatorData
     private function __construct(array $arguments, ReflectionMethod $method)
     {
         $this->arguments = array_values($arguments);
-        $this->method = $method;
+        $this->method    = $method;
     }
 
     /**
-     * @psalm-param list<mixed> $arguments
      * @param array<mixed> $arguments
+     *
+     * @psalm-param list<mixed> $arguments
      */
     public static function create(array $arguments, ReflectionMethod $method): self
     {
@@ -34,8 +35,9 @@ final class MethodValidatorData
     }
 
     /**
-     * @psalm-return list<mixed>
      * @return array<mixed>
+     *
+     * @psalm-return list<mixed>
      */
     public function arguments(): array
     {

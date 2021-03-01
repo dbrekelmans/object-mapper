@@ -15,7 +15,7 @@ final class ParameterValidatorData
     /** @param mixed $value */
     private function __construct($value, ReflectionParameter $parameter)
     {
-        $this->value = $value;
+        $this->value     = $value;
         $this->parameter = $parameter;
     }
 

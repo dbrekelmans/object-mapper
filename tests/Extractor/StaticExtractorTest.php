@@ -10,10 +10,10 @@ use stdClass;
 
 final class StaticExtractorTest extends TestCase
 {
-    public function testExtract() : void
+    public function testExtract(): void
     {
         $expected = 'static value';
-        $actual = (new StaticExtractor())->extract(new stdClass(), $expected);
+        $actual   = (new StaticExtractor())->extract(new stdClass(), $expected);
 
         self::assertSame($expected, $actual);
     }

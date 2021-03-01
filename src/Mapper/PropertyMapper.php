@@ -26,13 +26,11 @@ final class PropertyMapper
     }
 
     /**
-     * @template T of object
-     *
-     * @psalm-param T $target
-     *
-     * @psalm-return T
-     *
      * @throws MappingError
+     *
+     * @template T of object
+     * @psalm-param T $target
+     * @psalm-return T
      */
     public function map(object $source, object $target, Property $property): object
     {

@@ -11,7 +11,7 @@ final class ObjectMapperTest extends TestCase
     /**
      * @todo
      */
-    public function testMap() : void
+    public function testMap(): void
     {
         // TODO
     }

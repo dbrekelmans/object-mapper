@@ -36,7 +36,7 @@ final class InternalTypeValidator implements TypeValidator
         }
 
         $valueType = Type::fromValue($value, $value === null);
-        $type = Type::fromName($typeName, $reflectionType->allowsNull());
+        $type      = Type::fromName($typeName, $reflectionType->allowsNull());
 
         if (!$type->isAssignable($valueType)) {
             $context->add(Violation::create(sprintf(

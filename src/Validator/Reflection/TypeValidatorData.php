@@ -16,7 +16,7 @@ final class TypeValidatorData
     private function __construct($value, ReflectionType $type)
     {
         $this->value = $value;
-        $this->type = $type;
+        $this->type  = $type;
     }
 
     /** @param mixed $value */

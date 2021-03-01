@@ -10,21 +10,21 @@ use ObjectMapper\Mapping\Argument;
 use ObjectMapper\Mapping\Constructor;
 use ObjectMapper\Mapping\Source;
 use ObjectMapper\Validator\Context;
-use ObjectMapper\Validator\Reflection\InternalMethodValidator;
 use ObjectMapper\Validator\Reflection\MethodValidator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
 use function array_values;
 
 final class ConstructorMapperTest extends TestCase
 {
     /**
-     * @dataProvider mapDataProvider
-     *
-     * @psalm-param class-string $target
      * @param array<string, mixed> $expectedProperties
+     *
+     * @dataProvider mapDataProvider
+     * @psalm-param class-string $target
      */
-    public function testMap(string $target, array $expectedProperties) : void
+    public function testMap(string $target, array $expectedProperties): void
     {
         $extractor = $this->createStub(Extractor::class);
         $extractor->method('extract')->willReturnArgument(1);
@@ -49,7 +49,7 @@ final class ConstructorMapperTest extends TestCase
     }
 
     /** @return array<string, array<mixed>> */
-    public function mapDataProvider() : array
+    public function mapDataProvider(): array
     {
         return [
             'zero_parameters' => [ZeroParameterConstructor::class, []],

@@ -32,7 +32,7 @@ final class InternalMethodValidator implements MethodValidator
             $context = Context::create();
         }
 
-        $method = $data->method();
+        $method    = $data->method();
         $arguments = $data->arguments();
 
         $argumentCount = count($arguments);

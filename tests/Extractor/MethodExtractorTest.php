@@ -12,7 +12,7 @@ final class MethodExtractorTest extends TestCase
 {
     private MethodExtractor $extractor;
 
-    public function testNonExistentMethod() : void
+    public function testNonExistentMethod(): void
     {
         $source = new class () {
         };
@@ -21,10 +21,10 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    public function testVoidMethod() : void
+    public function testVoidMethod(): void
     {
         $source = new class () {
-            public function method() : void
+            public function method(): void
             {
             }
         };
@@ -32,10 +32,10 @@ final class MethodExtractorTest extends TestCase
         self::assertNull($this->extractor->extract($source, 'method'));
     }
 
-    public function testExtractPublicMethod() : void
+    public function testExtractPublicMethod(): void
     {
         $source = new class () {
-            public function method() : string
+            public function method(): string
             {
                 return 'value';
             }
@@ -44,10 +44,10 @@ final class MethodExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($source, 'method'));
     }
 
-    public function testExtractPublicStaticMethod() : void
+    public function testExtractPublicStaticMethod(): void
     {
         $source = new class () {
-            public static function method() : string
+            public static function method(): string
             {
                 return 'value';
             }
@@ -56,10 +56,10 @@ final class MethodExtractorTest extends TestCase
         self::assertSame('value', $this->extractor->extract($source, 'method'));
     }
 
-    public function testExtractProtectedMethod() : void
+    public function testExtractProtectedMethod(): void
     {
         $source = new class () {
-            protected function method() : string
+            protected function method(): string
             {
                 return 'value';
             }
@@ -69,10 +69,10 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    public function testExtractProtectedStaticMethod() : void
+    public function testExtractProtectedStaticMethod(): void
     {
         $source = new class () {
-            protected static function method() : string
+            protected static function method(): string
             {
                 return 'value';
             }
@@ -82,10 +82,10 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    public function testExtractPrivateMethod() : void
+    public function testExtractPrivateMethod(): void
     {
         $source = new class () {
-            private function method() : string
+            private function method(): string
             {
                 return 'value';
             }
@@ -95,10 +95,10 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    public function testExtractPrivateStaticMethod() : void
+    public function testExtractPrivateStaticMethod(): void
     {
         $source = new class () {
-            private static function method() : string
+            private static function method(): string // phpcs:ignore
             {
                 return 'value';
             }
@@ -108,7 +108,7 @@ final class MethodExtractorTest extends TestCase
         $this->extractor->extract($source, 'method');
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->extractor = new MethodExtractor();
     }

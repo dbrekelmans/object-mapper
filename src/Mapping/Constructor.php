@@ -31,8 +31,9 @@ final class Constructor
     }
 
     /**
-     * @psalm-return list<Argument>
      * @return array<int, Argument>|Argument[]
+     *
+     * @psalm-return list<Argument>
      */
     public function arguments(): array
     {

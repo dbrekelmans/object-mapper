@@ -19,8 +19,9 @@ interface Mapping
     public function constructor(): Constructor;
 
     /**
-     * @psalm-return list<Property>
      * @return Property[]
+     *
+     * @psalm-return list<Property>
      */
     public function properties(): array;
 }

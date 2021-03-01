@@ -14,7 +14,7 @@ final class Source
     private function __construct(Extractor $extractor, string $data)
     {
         $this->extractor = $extractor;
-        $this->data = $data;
+        $this->data      = $data;
     }
 
     public static function create(Extractor $extractor, string $value): self

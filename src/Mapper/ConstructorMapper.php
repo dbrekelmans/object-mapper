@@ -27,13 +27,11 @@ final class ConstructorMapper
     }
 
     /**
-     * @template T of object
-     *
-     * @psalm-param class-string<T> $target
-     *
-     * @psalm-return T
-     *
      * @throws MappingError
+     *
+     * @template T of object
+     * @psalm-param class-string<T> $target
+     * @psalm-return T
      */
     public function map(object $source, string $target, Constructor $constructor): object
     {
