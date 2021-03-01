@@ -27,7 +27,7 @@ final class MethodExtractor implements Extractor
         }
 
         if ($reflectionMethod->isStatic()) {
-            /** @psalm-suppress UndefinedClass */
+            /** @psalm-suppress MixedMethodCall */
             return $source::$data();
         }
 

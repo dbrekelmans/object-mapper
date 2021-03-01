@@ -19,7 +19,7 @@
     "require-dev": {
         "doctrine/coding-standard": "^8.2",
         "phpunit/phpunit": "^9.2",
-        "dbrekelmans/coding-standard": "^1.1",
+        "psalm/plugin-phpunit": "^0.15.1",
         "vimeo/psalm": "^4.6"
     },
     "autoload": {
